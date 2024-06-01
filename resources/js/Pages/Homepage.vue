@@ -55,11 +55,16 @@ const htmlResult3 = computed(() => marked(props.result3 || ''));
 const htmlResult4 = computed(() => marked(props.result4 || ''));
 const htmlResult5 = computed(() => marked(props.result5 || ''));
 const htmlResult6 = computed(() => marked(props.result6 || ''));
+
+const scrollToForm = () => {
+  const formElement = document.getElementById('form');
+  formElement.scrollIntoView({ behavior: 'smooth' });
+};
 </script>
 <template>
   <Head title="Homepage" />
-  <MainSection></MainSection>
-  <div class="max-w-6xl mx-auto py-20">
+  <MainSection @scroll-to-form="scrollToForm"></MainSection>
+  <div class="max-w-6xl mx-auto py-20" id="form">
     <div
       class="my-3 mx-2 text-h4 !leading-[66px] !font-semibold text-poppins text-gray-800"
     >
@@ -186,27 +191,27 @@ const htmlResult6 = computed(() => marked(props.result6 || ''));
       <!-- <p v-for="(line, index) in result.split('\n')" :key="index">{{ line }}</p>
      -->
       <div class="my-5">
-        <h3 class="text-center text-h4">Executive Summary</h3>
+        <h3 class="text-center text-h4">--- Executive Summary ---</h3>
         <div v-html="htmlResult1" class="markdown-content"></div>
       </div>
       <div class="my-5">
-        <h3 class="text-center text-h4">Financial Snapshot</h3>
+        <h3 class="text-center text-h4">--- Financial Snapshot ---</h3>
         <div v-html="htmlResult2" class="markdown-content"></div>
       </div>
       <div class="my-5">
-        <h3 class="text-center text-h4">Goal Analysis</h3>
+        <h3 class="text-center text-h4">--- Goal Analysis ---</h3>
         <div v-html="htmlResult3" class="markdown-content"></div>
       </div>
       <div class="my-5">
-        <h3 class="text-center text-h4">Recommended Action Plan</h3>
+        <h3 class="text-center text-h4">--- Recommended Action Plan ---</h3>
         <div v-html="htmlResult4" class="markdown-content"></div>
       </div>
       <div class="my-5">
-        <h3 class="text-center text-h4">Monitoring and Review</h3>
+        <h3 class="text-center text-h4">--- Monitoring and Review ---</h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
       </div>
       <div class="my-5">
-        <h3 class="text-center text-h4">Conclusion</h3>
+        <h3 class="text-center text-h4">--- Conclusion ---</h3>
         <div v-html="htmlResult6" class="markdown-content"></div>
       </div>
     </div>

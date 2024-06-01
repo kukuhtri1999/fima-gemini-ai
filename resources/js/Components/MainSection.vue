@@ -17,7 +17,7 @@
       </div>
       <div class="w-full text-center flex justify-center mb-8">
         <h1
-          class="text-h3 !leading-[66px] !font-semibold text-poppins text-gray-800 max-w-3xl text-center w-full"
+          class="text-h3 !leading-[66px] !font-bold text-poppins text-gray-800 max-w-3xl text-center w-full"
         >
           Save your Money and Life with our
           <span
@@ -39,7 +39,13 @@
         </p>
       </div>
       <div class="flex justify-center mt-20">
-        <VBtn variant="flat" color="black" size="x-large">Get Started</VBtn>
+        <VBtn
+          variant="flat"
+          color="black"
+          size="x-large"
+          @click="$emit('scrollToForm')"
+          >Get Started</VBtn
+        >
       </div>
       <div class="flex justify-center mt-10">
         <p class="text-gray-800 max-w-3xl text-center text-[14px] leading-8">
