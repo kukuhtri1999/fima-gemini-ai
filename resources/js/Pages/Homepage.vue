@@ -38,6 +38,8 @@ const submitForm = () => {
     onSuccess: () => {
       showAnswer.value = true;
       loading.value = false;
+      const answersElement = document.getElementById('answers');
+      answersElement.scrollIntoView({ behavior: 'smooth' });
     },
     onError: (errors) => {
       loading.value = false;
@@ -64,7 +66,7 @@ const scrollToForm = () => {
 <template>
   <Head title="Homepage" />
   <MainSection @scroll-to-form="scrollToForm"></MainSection>
-  <div class="max-w-6xl mx-auto py-20" id="form">
+  <div class="max-w-6xl mx-auto py-20 animate2" id="form">
     <div
       class="my-3 mx-2 text-h4 !leading-[66px] !font-semibold text-poppins text-gray-800"
     >
@@ -187,7 +189,7 @@ const scrollToForm = () => {
         >Sit Tight! Fima will create your financial planning in few minutes 😊
       </span>
     </div>
-    <div class="my-5" v-if="showAnswer">
+    <div class="my-5" id="answers" v-if="showAnswer">
       <!-- <p v-for="(line, index) in result.split('\n')" :key="index">{{ line }}</p>
      -->
       <div class="my-5">
