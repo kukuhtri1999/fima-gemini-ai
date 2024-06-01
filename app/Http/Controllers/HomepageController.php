@@ -12,6 +12,10 @@ class HomepageController extends Controller
 {
     //
     public function chat(Request $request){
+        if (!$request->hasAny(['argument1'])) {
+            return redirect('/');
+        }
+
 
         // $response = Gemini::models()->list();
         // dd($response->models);
