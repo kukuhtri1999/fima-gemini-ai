@@ -1,6 +1,6 @@
-# Laravel Jetstream, Inertia, Tailwind CSS, and Vuetify Starter Template
+# Fima AI - Financial Manager powered with Google Gemini AI
 
-Welcome to the Laravel Jetstream, Inertia, Tailwind CSS, and Vuetify Starter Template! This project provides a solid foundation for building modern web applications with Laravel 11 on the backend and Inertia.js for server-side rendering on the frontend, styled using Tailwind CSS and Vuetify.
+Your Personal AI Financial Guide: Fima helps you achieve your financial goals with smart, tailored advice.
 
 ## Created by: Kukuh Tri Winarno Nugroho
 
@@ -8,44 +8,6 @@ Welcome to the Laravel Jetstream, Inertia, Tailwind CSS, and Vuetify Starter Tem
 - Website: [kukuhtri.my.id](https://kukuhtri.my.id/)
 
 ---
-
-## Introduction
-
-This starter template allows you to quickly scaffold a new Laravel web application using some of the most popular frameworks and libraries like:
-
-- Laravel - A popular PHP web application framework. Laravel is known for its elegant syntax, great documentation and amazing community support. It makes building robust and scalable web applications a breeze.
-
-- Jetstream - Provides authentication, registration and account management screens out of the box. Jetstream takes the pain out of building the boring but essential parts of a web app like user registration and login.
-
-- Inertia.js - Allows building single page apps in a way that feels like a multi-page app. Inertia.js brings the best of both worlds for building interactive UIs that also have great SEO on the server-side.
-
-- Vue.js - A progressive JavaScript framework for building user interfaces. Vue is loved for its approachablity and flexibility. The virtual DOM makes it really fast too.
-
-- Tailwind CSS - A utility-first CSS framework for rapid UI development. With Tailwind you can build custom designs without fighting CSS specificity issues.
-
-- Vuetify - Material Design component framework for Vue.js. Vuetify components help you quickly build beautiful material-inspired interfaces.
-
-Together these tools allow you to build a robust, secure and good-looking web app really quickly. The combination of Laravel and Vue.js is especially powerful in 2022.
-
-## Differences Features with Original One
-
-I have made several exciting changes compared to the original Laravel Jetstream template to make this starter template more visually appealing and user friendly:
-
-- Redesigned the default Jetstream authentication screens with a sleek, modern layout using custom Tailwind CSS and Vuetify components. The login, register and password reset pages now have a premium theme-like style.
-
-- Swapped out some of the standard Tailwind CSS form controls, buttons and other elements with matching Vuetify components. This gives the app a more polished and consistent look.
-
-- Created a new main dashboard page with material design cards, charts and metrics for an at-a-glance overview. Replaced the default home page.
-
-- Changed the overall application layout to use a clean vertical nav menu on the left instead of top navigation. Also added some nice custom components like user avatar and notifications.
-
-- Added several example page templates like settings, profile, tasks etc to demonstrate different layouts and UI elements.
-
-- Configured Vuetify theme colors and custom CSS to complement the Tailwind defaults. Achieved a cohesive material design styling throughout.
-
-- Set up Vuex for state management instead of relying solely on local component state. Great for scaling up bigger apps.
-
-- And more! Explore the code to see all the changes.
 
 ## Prerequisites
 
