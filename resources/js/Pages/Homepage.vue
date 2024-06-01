@@ -28,12 +28,15 @@ const props = defineProps({
 
 const answer = ref('');
 const loading = ref(false);
+const showAnswer = ref(false);
 
 const submitForm = () => {
+  showAnswer.value = false;
   loading.value = true;
   answer.value = '';
   form.post(route('home.chat'), {
     onSuccess: () => {
+      showAnswer.value = true;
       loading.value = false;
     },
     onError: (errors) => {
@@ -173,14 +176,13 @@ const htmlResult6 = computed(() => marked(props.result6 || ''));
       size="x-large"
       >Create my Financial Planning</VBtn
     >
-    <div v-if="loading" class="m-3 flex justify-center">
+    <div v-if="loading" class="m-10 flex justify-center">
       <VProgressCircular indeterminate color="primary"></VProgressCircular>
       <span class="px-2"
-        >Please wait for our Machine to processing your financial advise
-        :)</span
-      >
+        >Sit Tight! Fima will create your financial planning in few minutes 😊
+      </span>
     </div>
-    <div class="my-5" v-if="props.result1">
+    <div class="my-5" v-if="showAnswer">
       <!-- <p v-for="(line, index) in result.split('\n')" :key="index">{{ line }}</p>
      -->
       <div class="my-5">
