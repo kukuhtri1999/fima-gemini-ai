@@ -1,11 +1,12 @@
 <script setup>
-import { useForm, Head } from '@inertiajs/vue3';
+import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import { marked } from 'marked';
+import axios from 'axios';
 import MainSection from '@/Components/MainSection.vue';
 
-const form = useForm({
-  _method: 'GET',
+const form = ref({
+  _method: 'POST',
   ask: null,
   situation: null,
   financialGoals: null,
@@ -17,46 +18,53 @@ const form = useForm({
   preference: null,
 });
 
-const props = defineProps({
-  result1: String,
-  result2: String,
-  result3: String,
-  result4: String,
-  result5: String,
-  result6: String,
-});
+// const props = defineProps({
+//   result: Object,
+// });
 
 const answer = ref('');
 const loading = ref(false);
 const showAnswer = ref(false);
+const result = ref([]);
 
-const submitForm = () => {
+const submitForm = async () => {
   showAnswer.value = false;
   loading.value = true;
   answer.value = '';
-  form.post(route('home.chat'), {
-    onSuccess: () => {
-      showAnswer.value = true;
-      loading.value = false;
-      const answersElement = document.getElementById('answers');
-      answersElement.scrollIntoView({ behavior: 'smooth' });
-    },
-    onError: (errors) => {
-      loading.value = false;
-      notification.value = { type: 'error', message: errors.message };
-      setTimeout(() => {
-        notification.value = null;
-      }, 10000); // Hide after 10 seconds
-    },
-  });
+  try {
+    const response = await axios.post(route('home.chat'), form.value);
+    result.value = response.data.result;
+    showAnswer.value = true;
+    loading.value = false;
+  } catch (error) {
+    loading.value = false;
+    console.error(error);
+    alert('An error occurred. Please try again.');
+  }
 };
+const htmlResult1 = computed(() => marked(result.value[0] || ''));
+const htmlResult2A = computed(() => marked(result.value[1] || ''));
+const htmlResult2B = computed(() => marked(result.value[2] || ''));
+const htmlResult2C = computed(() => marked(result.value[3] || ''));
+const htmlResult3A = computed(() => marked(result.value[4] || ''));
+const htmlResult3B = computed(() => marked(result.value[5] || ''));
+const htmlResult4A = computed(() => marked(result.value[6] || ''));
+const htmlResult4B = computed(() => marked(result.value[7] || ''));
+const htmlResult4C = computed(() => marked(result.value[8] || ''));
+const htmlResult5 = computed(() => marked(result.value[9] || ''));
+const htmlResult6 = computed(() => marked(result.value[10] || ''));
 
-const htmlResult1 = computed(() => marked(props.result1 || ''));
-const htmlResult2 = computed(() => marked(props.result2 || ''));
-const htmlResult3 = computed(() => marked(props.result3 || ''));
-const htmlResult4 = computed(() => marked(props.result4 || ''));
-const htmlResult5 = computed(() => marked(props.result5 || ''));
-const htmlResult6 = computed(() => marked(props.result6 || ''));
+const fillDummy = () => {
+  form.value.ask = 'I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals';
+  form.value.situation = ' My name is Joe Yang , my age is 23 years old. Im live in Singapore. Im married with 2 child ( age 12 and 6 years old)';
+  form.value.financialGoals = 'I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals.';
+  form.value.riskScale = 7;
+  form.value.income = 'iam is senior programmer with monthly rate around SGD 4000';
+  form.value.expenses = ' my monthly expenses usually are for my family, rent house, and food for around SGD 2300. i have debt in Singapore Bank for my car , its around 400 SGD per month with 40 months left';
+  form.value.investment = 'i have store my $10,000 into fixed income mutual funds investment that can return around 6% per year. im also have rent house that can get around 500SGD monthly';
+  form.value.priority = 'my most priority are paying off debt, saving money for my upcoming children collague, building an emergency fund';
+  form.value.preference = 'im okay with regular stock investment, im avoiding some super high risk investment like cryptocurrency';
+};
 
 const scrollToForm = () => {
   const formElement = document.getElementById('form');
@@ -94,6 +102,14 @@ const scrollToForm = () => {
       need to know about you and your financial conditions. please fill all our
       9 questions below so Fima can prepare your Financial Planning for you 😉
     </p>
+    <VBtn
+      @click="fillDummy"
+      class="m-2"
+      variant="flat"
+      color="black"
+      size="x-large"
+      >Fill Dummy</VBtn
+    >
     <VTextarea
       variant="outlined"
       v-model="form.ask"
@@ -181,7 +197,7 @@ const scrollToForm = () => {
       variant="flat"
       color="black"
       size="x-large"
-      >Create my Financial Planning</VBtn
+      >Here we go</VBtn
     >
     <div v-if="loading" class="m-10 flex justify-center">
       <VProgressCircular indeterminate color="primary"></VProgressCircular>
@@ -190,30 +206,84 @@ const scrollToForm = () => {
       </span>
     </div>
     <div class="my-5" id="answers" v-if="showAnswer">
+      <!-- <div class="my-5" id="answers"> -->
       <!-- <p v-for="(line, index) in result.split('\n')" :key="index">{{ line }}</p>
      -->
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Executive Summary ---</h3>
+      <div class="flex justify-center py-5 animate1">
+        <div class="font-bold mx-2 text-5xl text-purple-600">💵 fima</div>
+        <span class="font-bold text-5xl text-black">Financial Plan</span>
+      </div>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">
+          BAB 1 : Executive Summary
+        </h3>
         <div v-html="htmlResult1" class="markdown-content"></div>
       </div>
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Financial Snapshot ---</h3>
-        <div v-html="htmlResult2" class="markdown-content"></div>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">
+          BAB 2 : Financial Snapshot
+        </h3>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">2.1 : Net Worth Statement</h4>
+          <div v-html="htmlResult2A" class="markdown-content"></div>
+        </div>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            2.2 : Income and Expense Statement
+          </h4>
+          <div v-html="htmlResult2B" class="markdown-content"></div>
+        </div>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">2.3 : Financial Ratios</h4>
+          <div v-html="htmlResult2C" class="markdown-content"></div>
+        </div>
       </div>
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Goal Analysis ---</h3>
-        <div v-html="htmlResult3" class="markdown-content"></div>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">BAB 3 : Goal Analysis</h3>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            3.1 : Goal Overview and Prioritization
+          </h4>
+          <div v-html="htmlResult3A" class="markdown-content"></div>
+        </div>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            3.2 : Goal Feasibility and Specific Strategies
+          </h4>
+          <div v-html="htmlResult3B" class="markdown-content"></div>
+        </div>
       </div>
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Recommended Action Plan ---</h3>
-        <div v-html="htmlResult4" class="markdown-content"></div>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">
+          BAB 4 : Recommended Action Plan
+        </h3>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            4.1 : Cash Flow and Investment Planning
+          </h4>
+          <div v-html="htmlResult4A" class="markdown-content"></div>
+        </div>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            4.2 : Tax and Insurance Planning
+          </h4>
+          <div v-html="htmlResult4B" class="markdown-content"></div>
+        </div>
+        <div class="my-5">
+          <h4 class="my-4 text-h5 !font-bold">
+            4.3 : Estate, Retirement, and Education Planning
+          </h4>
+          <div v-html="htmlResult4C" class="markdown-content"></div>
+        </div>
       </div>
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Monitoring and Review ---</h3>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">
+          BAB 5 : Monitoring and Review
+        </h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
       </div>
-      <div class="my-5">
-        <h3 class="text-center text-h4">--- Conclusion ---</h3>
+      <div class="py-10 border-y-[1px] solid border-gray-300">
+        <h3 class="text-center text-h4 !font-bold">Conclusion</h3>
         <div v-html="htmlResult6" class="markdown-content"></div>
       </div>
     </div>

@@ -22,7 +22,7 @@ Route::get('/', function () {
 })->name('homepage');
 
 Route::controller(HomepageController::class)->group(function () {
-    Route::get('/ask', 'chat')->name('home.chat');
+    Route::post('/ask', 'chat')->name('home.chat');
 });
 
 Route::middleware([
