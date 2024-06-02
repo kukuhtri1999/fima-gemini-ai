@@ -335,7 +335,15 @@ const scrollToForm = () => {
   margin: 15px 0;
   list-style-type: disc;
   list-style-position: inside;
+  padding-left: 15px;
+}
+
+.markdown-content ol {
+  margin: 15px 0;
+  list-style-type: auto;
+  list-style-position: inside;
   padding-left: 5px;
+  font-weight: 300;
 }
 .markdown-content li {
   margin: 15px 0;
