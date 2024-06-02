@@ -333,6 +333,9 @@ const scrollToForm = () => {
 }
 .markdown-content ul {
   margin: 15px 0;
+  list-style-type: disc;
+  list-style-position: inside;
+  padding-left: 5px;
 }
 .markdown-content li {
   margin: 15px 0;
