@@ -202,7 +202,8 @@ const scrollToForm = () => {
     <div v-if="loading" class="m-10 flex justify-center">
       <VProgressCircular indeterminate color="primary"></VProgressCircular>
       <span class="px-2"
-        >Sit Tight! Fima will create your financial planning in few minutes 😊
+        >Sit Tight! Fima will create your financial planning in around 3-6
+        minutes 😊
       </span>
     </div>
     <div class="my-5" id="answers" v-if="showAnswer">
@@ -224,13 +225,13 @@ const scrollToForm = () => {
           BAB 2 : Financial Snapshot
         </h3>
         <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">2.1 : Net Worth Statement</h4>
+          <h4 class="my-4 text-h5 !font-bold">
+            2.1 : Income and Expense Statement
+          </h4>
           <div v-html="htmlResult2A" class="markdown-content"></div>
         </div>
         <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            2.2 : Income and Expense Statement
-          </h4>
+          <h4 class="my-4 text-h5 !font-bold">2.2 : Net Worth Statement</h4>
           <div v-html="htmlResult2B" class="markdown-content"></div>
         </div>
         <div class="my-5">
