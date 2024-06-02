@@ -74,7 +74,7 @@ const scrollToForm = () => {
 <template>
   <Head title="Homepage" />
   <MainSection @scroll-to-form="scrollToForm"></MainSection>
-  <div class="max-w-6xl mx-auto py-20 animate2" id="form">
+  <div class="max-w-6xl mx-auto py-20 animate2 px-3" id="form">
     <div
       class="my-3 mx-2 text-h4 !leading-[66px] !font-semibold text-poppins text-gray-800"
     >

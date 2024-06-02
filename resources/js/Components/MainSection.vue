@@ -17,9 +17,9 @@
       </div>
       <div class="w-full text-center flex justify-center mb-8">
         <h1
-          class="text-h3 !leading-[66px] !font-bold text-poppins text-gray-800 max-w-3xl text-center w-full animate2"
+          class="text-2xl sm:text-4xl sm:!leading-[66px] !font-bold text-poppins text-gray-800 max-w-3xl text-center w-full animate2"
         >
-          Save your Money and Life with our
+          Save your Money and Life with our <br />
           <span
             style="
               background: linear-gradient(to right, #c65bcf, #10439f);
@@ -32,7 +32,7 @@
       </div>
       <div class="flex justify-center animate3">
         <p
-          class="text-gray-500 font-medium max-w-3xl text-center text-xl leading-8"
+          class="text-gray-500 font-medium max-w-3xl text-center text-l sm:text-xl leading-8"
         >
           AI-Powered Financial Planning: Fima's intelligent algorithms analyze
           your finances and create a personalized roadmap for success.
