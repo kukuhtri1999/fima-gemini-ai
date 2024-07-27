@@ -4,6 +4,9 @@ import { ref, computed } from 'vue';
 import { marked } from 'marked';
 import axios from 'axios';
 import MainSection from '@/Components/MainSection.vue';
+import PersonalInformation from '@/Components/Part/PersonalInformation.vue';
+import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
+import FinancialSituations from '@/Components/Part/FinancialSituations.vue';
 
 const form = ref({
   _method: 'POST',
@@ -26,6 +29,7 @@ const answer = ref('');
 const loading = ref(false);
 const showAnswer = ref(false);
 const result = ref([]);
+const tab = ref('');
 
 const submitForm = async () => {
   showAnswer.value = false;
@@ -69,6 +73,24 @@ const scrollToForm = () => {
   const formElement = document.getElementById('form');
   formElement.scrollIntoView({ behavior: 'smooth' });
 };
+
+const currencyNow = ref('');
+
+const updateCurrency = (newCurrency) => {
+  currencyNow.value = newCurrency;
+};
+
+const field1 = ref(null);
+
+const test = () => {
+  const data = {
+    field1: field1.value ? field1.value.formData : {},
+    // child2: child2Ref.value ? child2Ref.value.formData : {},
+    // child3: child3Ref.value ? child3Ref.value.formData : {}
+  };
+  console.log('Submitted data:', data);
+  // Handle form submission, e.g., send data to an API
+};
 </script>
 <template>
   <Head title="Homepage" />
@@ -109,6 +131,34 @@ const scrollToForm = () => {
       size="x-large"
       >Fill Dummy</VBtn
     >
+    <div class="tab-form border-[1px] mt-5 solid border-primary rounded-lg">
+      <VTabs v-model="tab" bg-color="secondaryLight" color="secondary">
+        <VTab value="one">Personal Information</VTab>
+        <VTab value="two">Financial Goals</VTab>
+        <VTab value="three">Financial Situation</VTab>
+        <VTab value="four">Financial Preferences</VTab>
+      </VTabs>
+
+      <VWindow v-model="tab">
+        <VWindowItem value="one" class="p-5">
+          <PersonalInformation ref="field1" />
+        </VWindowItem>
+
+        <VWindowItem value="two" class="p-5">
+          <FinancialGoals
+            ref="field2"
+            :currencyNow="currencyNow"
+            @updateCurrency="updateCurrency"
+          />
+        </VWindowItem>
+
+        <VWindowItem value="three" class="p-5">
+          <FinancialSituations ref="field3" :currencyNow="currencyNow" />
+        </VWindowItem>
+        <VWindowItem value="four"> Four </VWindowItem>
+      </VWindow>
+    </div>
+    <VBtn @click="test">Test</VBtn>
     <VTextarea
       variant="outlined"
       v-model="form.ask"

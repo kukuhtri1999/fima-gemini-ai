@@ -24,10 +24,15 @@ export default {
         display: ['"Poppins"'],
         body: ['"Poppins"'],
       },
-      white: '#ffffff',
-      primary: '#00a65a',
+      primary: '#00a65a', // Primary color
+      secondary: '#8863f9', // Secondary color
+      accent: '#00a65a', // Accent color
+      error: '#FF5252', // Error color
+      info: '#2196F3', // Info color
+      success: '#4CAF50', // Success color
+      warning: '#FFC107', // Warning color}
       greenlight: '#ddfff0',
-      secondary: '#8863f9',
+      secondaryLight: '#ede9ff',
     },
     screens: {
       sm: '440px',

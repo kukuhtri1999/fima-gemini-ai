@@ -29,6 +29,7 @@ const vuetify = createVuetify({
           success: '#4CAF50', // Success color
           warning: '#FFC107', // Warning color}
           greenlight: '#ddfff0',
+          secondaryLight: '#ede9ff',
         },
       },
     },
