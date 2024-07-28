@@ -521,7 +521,7 @@ class HomepageController extends Controller
             $chatprompt = null;
             $chatprompt[0] = " Continuing our last chat. please generate part of financial advice document :
 
-        BAB 1. Executive Summary: Concise overview of the client's financial situation, goals, and key recommendations, tailored to the client's preferred language. Client will never forgive us if theres any incorrect data or calculations. please write it carefully and easy to understand for all people
+        BAB 1. Executive Summary: Concise overview of the client's financial situation, goals, and key recommendations, tailored to the client's preferred language. Client will never forgive us if theres any incorrect data or calculations.
 
         Additional Instructions:
         * Prioritize clear, actionable, and personalized advice in the client's preferred language.
@@ -539,21 +539,26 @@ class HomepageController extends Controller
 
         BAB 2. Financial Snapshot: Detailed analysis of income, expenses, assets, liabilities, and net worth, utilizing tables where appropriate for clear presentation ( please add an simulation table or related with correct calculations number for all of these) .
 
-        i will split this BAB into 2 SUBBAB , please write it carefully and easy to understand for all people
+        i will split this BAB into 2 SUBBAB , for now please generate BAB 2.1 : Income and Expense Statement: A table detailing the client's income sources and all categories of expenses, showing their net cash flow. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
-        BAB 2.1 : Income and Expense Statement: A table detailing the client's income sources and all categories of expenses, showing their net cash flow. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
-
-        Now please generate BAB 2.2 : Net Worth Statement & Key financial ratios: A table summarizing the client's assets (what they own) and liabilities (what they owe), resulting in their net worth. also (e.g., debt-to-income, savings rate) that provide insights into the client's financial health. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
         ";
 
             $chatprompt[2] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
 
+        Now please generate BAB 2.2 : Net Worth Statement & Key financial ratios: A table summarizing the client's assets (what they own) and liabilities (what they owe), resulting in their net worth. also (e.g., debt-to-income, savings rate) that provide insights into the client's financial health. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
+
+        ";
+
+            $chatprompt[3] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+
         BAB 3. Goal Analysis: Assessment of each goal's feasibility, considering the client's current situation, risk tolerance, and time horizon.
 
-        i will split this BAB into 2 SUBBAB , please write it carefully and easy to understand for all people
+        i will split this BAB into 2 SUBBAB , for now please generate BAB 3.1 : Goals Overview and Priorittization: A list of the client's short-term, mid-term, and long-term financial goals. Also Ranking of the goals based on importance and urgency. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
-        BAB 3.1 : Goals Overview and Priorittization: A list of the client's short-term, mid-term, and long-term financial goals. Also Ranking of the goals based on importance and urgency. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
+        ";
+
+            $chatprompt[4] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
 
         Now please generate BAB 3.2 : Goal Feasibility and Specific Strategies: Assessment of each goal's attainability based on the client's financial resources and time horizon.
         Also Initial recommendations on how to approach each goal. If client doesnt put detail price or number on some of their things , just estimate those thing based on the latest standard market price of those things at the country of place where this client lived( also dont forget to put 'estimated' note). please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
@@ -562,7 +567,7 @@ class HomepageController extends Controller
 
         ";
 
-            $chatprompt[3] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+            $chatprompt[5] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
 
         4. Recommended Action Plan:
             * Budgeting Strategies: Tailored recommendations to optimize income and expenses, potentially using tables to illustrate budgets.
@@ -574,7 +579,7 @@ class HomepageController extends Controller
             * estimated investment return and total money we got per year detailed in simulation table with correct calculation
 
 
-            i will split this BAB into 3 SUBBAB. please write it carefully and easy to understand for all people
+            i will split this BAB into 3 SUBBAB , for now please generate
 
             BAB 4.1 Cash Flow Management & Investment Planning based on Client financial goals / financial problem / financial priorities :
             - Budgeting: Creation of a detailed budget to track income and expenses.
@@ -584,13 +589,33 @@ class HomepageController extends Controller
             - Asset Allocation: Recommended allocation of investments across different asset classes (e.g., stocks, bonds, real estate).
             - Investment Selection: Specific recommendations for investment products (e.g., mutual funds, ETFs, individual stocks) based on the client's IPS.
 
+            please also create 3 different planning that on point with this (also with simulation table)
+
+             please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
+
+        ";
+
+            $chatprompt[6] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+
+        Now please generate :
+
             BAB 4.2 Tax and Insurance Planning based on Client financial goals / financial problem / financial priorities:
             - Tax Efficiency: Strategies to minimize taxes through tax-advantaged accounts, deductions, and credits.
             - Tax Projections: Estimates of future tax liability based on the client's income and investments.
             - Insurence Risk Assessment: Identification of potential risks the client faces (e.g., disability, illness, death).
             - Insurance Coverage: Recommendations for adequate life, health, disability, and property/casualty insurance coverage.
 
-            BAB 4.3 Estate, Retirement, and Education Planning, ETC. based on Client financial goals / financial problem / financial priorities:
+            please also create 3 different planning that on point with this with detailed informations and plan data (also with simulation table)
+
+             please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
+
+        ";
+
+            $chatprompt[7] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+
+        Now please generate :
+
+            BAB 4.3 Estate, Retirement, and Education Planning based on Client financial goals / financial problem / financial priorities:
             - Estate Wills and Trusts: Recommendations for creating or updating wills and trusts to ensure assets are distributed according to the client's wishes.
             - Estate Power of Attorney: Guidance on assigning power of attorney for financial and healthcare decisions.
             - Retirement Goals: Clarification of the client's retirement goals (e.g., desired lifestyle, income needs).
@@ -599,20 +624,25 @@ class HomepageController extends Controller
             - Education Goals: Identification of the client's education goals for themselves or their dependents.
             - Education Savings Plans: Recommendations for saving for education expenses (e.g., 529 plans).
 
-            please also create 3 different planning that on point with this (also with simulation table)
+            please also create 2 different planning that on point with this with detailed informations and plan data (also with simulation table)
 
              please also add simulation in a table with high detailed plan and correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
         ";
 
-            $chatprompt[4] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+            $chatprompt[8] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
 
-        BAB 5. Monitoring , Review and Conclusion:
+        5. Monitoring and Review:
         - Review Schedule: A timeline for regular reviews of the financial plan to ensure it remains relevant and effective.
         - Contingency Planning: Discussion of potential risks and how to adjust the plan if circumstances change.
-        - Conclusion of all our previous parts with high detailed words and make sure clients clearly can understand it easily. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
-        please also add simulation in a table with high detailed plan with correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations. please write it carefully and easy to understand for all people
+        please also add simulation in a table with high detailed plan with correct calculations number. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
+
+        ";
+
+            $chatprompt[9] = " Continuing our last chat. please generate part of financial advice document  (at least 4000 words) :
+
+        6. Conclusion of all our previous parts with high detailed words and make sure clients clearly can understand it easily. Please make sure all the calculations numbers (including inside the tables) are correct and there are no errors. Client will never forgive us if theres any incorrect data or calculations.
 
         ";
 

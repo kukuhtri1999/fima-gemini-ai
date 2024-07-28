@@ -53,15 +53,15 @@ const submitForm = async () => {
   }
 };
 const htmlResult1 = computed(() => marked(result.value[0] || ''));
-const htmlResult2A = computed(() => marked(result.value[1] || ''));
-const htmlResult2B = computed(() => marked(result.value[2] || ''));
-const htmlResult3A = computed(() => marked(result.value[3] || ''));
-const htmlResult3B = computed(() => marked(result.value[4] || ''));
-const htmlResult4A = computed(() => marked(result.value[5] || ''));
-const htmlResult4B = computed(() => marked(result.value[6] || ''));
-const htmlResult4C = computed(() => marked(result.value[7] || ''));
-const htmlResult5 = computed(() => marked(result.value[8] || ''));
-const htmlResult6 = computed(() => marked(result.value[9] || ''));
+const htmlResult2 = computed(() => marked(result.value[1] || ''));
+const htmlResult3 = computed(() => marked(result.value[2] || ''));
+const htmlResult4 = computed(() => marked(result.value[3] || ''));
+const htmlResult5 = computed(() => marked(result.value[4] || ''));
+// const htmlResult4A = computed(() => marked(result.value[5] || ''));
+// const htmlResult4B = computed(() => marked(result.value[6] || ''));
+// const htmlResult4C = computed(() => marked(result.value[7] || ''));
+// const htmlResult5 = computed(() => marked(result.value[8] || ''));
+// const htmlResult6 = computed(() => marked(result.value[9] || ''));
 
 const fillDummy = () => {
   form.value.ask = 'I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals';
@@ -245,31 +245,13 @@ const test = async () => {
           BAB 2 : Financial Snapshot
         </h3>
         <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            2.1 : Income and Expense Statement
-          </h4>
-          <div v-html="htmlResult2A" class="markdown-content"></div>
-        </div>
-        <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            2.2 : Net Worth Statement & Financial Ratios
-          </h4>
-          <div v-html="htmlResult2B" class="markdown-content"></div>
+          <div v-html="htmlResult2" class="markdown-content"></div>
         </div>
       </div>
       <div class="py-10 border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">BAB 3 : Goal Analysis</h3>
         <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            3.1 : Goal Overview and Prioritization
-          </h4>
-          <div v-html="htmlResult3A" class="markdown-content"></div>
-        </div>
-        <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            3.2 : Goal Feasibility and Specific Strategies
-          </h4>
-          <div v-html="htmlResult3B" class="markdown-content"></div>
+          <div v-html="htmlResult3" class="markdown-content"></div>
         </div>
       </div>
       <div class="py-10 border-y-[1px] solid border-gray-300">
@@ -277,33 +259,14 @@ const test = async () => {
           BAB 4 : Recommended Action Plan
         </h3>
         <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            4.1 : Cash Flow and Investment Planning
-          </h4>
-          <div v-html="htmlResult4A" class="markdown-content"></div>
-        </div>
-        <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            4.2 : Tax and Insurance Planning
-          </h4>
-          <div v-html="htmlResult4B" class="markdown-content"></div>
-        </div>
-        <div class="my-5">
-          <h4 class="my-4 text-h5 !font-bold">
-            4.3 : Estate, Retirement, and Education Planning
-          </h4>
-          <div v-html="htmlResult4C" class="markdown-content"></div>
+          <div v-html="htmlResult4" class="markdown-content"></div>
         </div>
       </div>
       <div class="py-10 border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 5 : Monitoring and Review
+          BAB 5 : Monitoring, Review adn Conclusion
         </h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
-      </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
-        <h3 class="text-center text-h4 !font-bold">Conclusion</h3>
-        <div v-html="htmlResult6" class="markdown-content"></div>
       </div>
     </div>
   </div>
