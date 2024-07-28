@@ -206,17 +206,17 @@ const test = async () => {
     </div>
     <div class="my-5">
       <VBtn @click="test" variant="flat" color="primary" size="x-large"
-        >Test</VBtn
+        >Create My Financial Plan</VBtn
       >
 
-      <VBtn
+      <!-- <VBtn
         @click="submitForm"
         class="mx-2"
         variant="flat"
         color="black"
         size="x-large"
         >Here we go</VBtn
-      >
+      > -->
     </div>
 
     <div v-if="loading" class="m-10 flex justify-center">
