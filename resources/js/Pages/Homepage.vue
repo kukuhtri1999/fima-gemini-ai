@@ -3,10 +3,12 @@ import { Head } from '@inertiajs/vue3';
 import { ref, computed } from 'vue';
 import { marked } from 'marked';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 import MainSection from '@/Components/MainSection.vue';
 import PersonalInformation from '@/Components/Part/PersonalInformation.vue';
 import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
 import FinancialSituations from '@/Components/Part/FinancialSituations.vue';
+import FinancialPreferences from '@/Components/Part/FinancialPreferences.vue';
 
 const form = ref({
   _method: 'POST',
@@ -43,7 +45,11 @@ const submitForm = async () => {
   } catch (error) {
     loading.value = false;
     console.error(error);
-    alert('An error occurred. Please try again.');
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `An error occurred. Please try again. Error : ${error}`,
+    });
   }
 };
 const htmlResult1 = computed(() => marked(result.value[0] || ''));
@@ -81,15 +87,54 @@ const updateCurrency = (newCurrency) => {
 };
 
 const field1 = ref(null);
+const field2 = ref(null);
+const field3 = ref(null);
+const field4 = ref(null);
 
-const test = () => {
-  const data = {
+const test = async () => {
+  const dataForm = {
     field1: field1.value ? field1.value.formData : {},
-    // child2: child2Ref.value ? child2Ref.value.formData : {},
-    // child3: child3Ref.value ? child3Ref.value.formData : {}
+    field2: field2.value ? field2.value.formData : {},
+    field3: field3.value ? field3.value.formData : {},
+    field4: field4.value ? field4.value.formData : {},
   };
-  console.log('Submitted data:', data);
+  console.log('Submitted data:', dataForm);
   // Handle form submission, e.g., send data to an API
+  showAnswer.value = false;
+  loading.value = true;
+  answer.value = '';
+  try {
+    const response = await axios.post(route('home.chat'), dataForm);
+    result.value = response.data.result;
+    showAnswer.value = true;
+    loading.value = false;
+  } catch (error) {
+    loading.value = false;
+    console.error(error.message);
+    if (error.response && error.response.status === 422) {
+      const { errors } = error.response.data;
+      let errorMessages = '<ul>';
+
+      for (const key in errors) {
+        if (Object.hasOwnProperty.call(errors, key)) {
+          errors[key].forEach((message) => {
+            errorMessages += `<li>${message}</li>`;
+          });
+        }
+      }
+
+      errorMessages += '</ul>';
+
+      Swal.fire({
+        title: 'Validation Error',
+        html: errorMessages,
+        icon: 'error',
+      });
+    } else {
+      // Handle other types of errors
+      Swal.fire('Error', 'An unexpected error occurred', 'error');
+    }
+  }
 };
 </script>
 <template>
@@ -121,7 +166,8 @@ const test = () => {
     <p class="my-5 mx-2">
       Lets hear what's your problem or what's kind of advise do you need. Fima
       need to know about you and your financial conditions. please fill all our
-      9 questions below so Fima can prepare your Financial Planning for you 😉
+      questions below so Fima can prepare your Financial Planning for you. Dont
+      worry, we dont save any of your data here in our database. I Promise 😉
     </p>
     <VBtn
       @click="fillDummy"
@@ -143,7 +189,6 @@ const test = () => {
         <VWindowItem value="one" class="p-5">
           <PersonalInformation ref="field1" />
         </VWindowItem>
-
         <VWindowItem value="two" class="p-5">
           <FinancialGoals
             ref="field2"
@@ -151,103 +196,29 @@ const test = () => {
             @updateCurrency="updateCurrency"
           />
         </VWindowItem>
-
         <VWindowItem value="three" class="p-5">
           <FinancialSituations ref="field3" :currencyNow="currencyNow" />
         </VWindowItem>
-        <VWindowItem value="four"> Four </VWindowItem>
+        <VWindowItem value="four" class="p-5">
+          <FinancialPreferences ref="field4" :currencyNow="currencyNow" />
+        </VWindowItem>
       </VWindow>
     </div>
-    <VBtn @click="test">Test</VBtn>
-    <VTextarea
-      variant="outlined"
-      v-model="form.ask"
-      class="m-2 my-5"
-      label="Tell me whats your financial problem or what financial advise that you need ?"
-      hint="Example = I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals"
-    ></VTextarea>
-    <VTextarea
-      variant="outlined"
-      v-model="form.situation"
-      class="m-2 my-5"
-      label="Tell me whats your name, age, where do you live, martial status, how many child you have ( and age of each child ) "
-      hint="Example = My name is Joe Yang , my age is 23 years old. Im live in Singapore. Im married with 2 child ( age 12 and 6 years old)"
-    ></VTextarea>
-    <VTextField
-      variant="outlined"
-      v-model="form.financialGoals"
-      class="m-2 my-5"
-      label="Tell me your top 3 financial goals and when you want to achieve these goals "
-      hint="Example = i want to buy $50,000 house, also save money for my 2 children school and collague, buying a $30,000 car "
-    ></VTextField>
-    <div class="m-2 my-5">
-      On a scale of 1 to 10, how comfortable are you with taking risks in your
-      investments?
-      <p class="text-sm text-gray-400">
-        Note: 1 is super safe but low return, 5 is medium risk with medium
-        return, 10 is high risk but high return
-      </p>
+    <div class="my-5">
+      <VBtn @click="test" variant="flat" color="primary" size="x-large"
+        >Test</VBtn
+      >
+
+      <VBtn
+        @click="submitForm"
+        class="mx-2"
+        variant="flat"
+        color="black"
+        size="x-large"
+        >Here we go</VBtn
+      >
     </div>
-    <VRadioGroup v-model="form.riskScale" inline>
-      <VRadio label="1" value="1"></VRadio>
-      <VRadio label="2" value="2"></VRadio>
-      <VRadio label="3" value="3"></VRadio>
-      <VRadio label="4" value="4"></VRadio>
-      <VRadio label="5" value="5"></VRadio>
-      <VRadio label="6" value="6"></VRadio>
-      <VRadio label="7" value="7"></VRadio>
-      <VRadio label="8" value="8"></VRadio>
-      <VRadio label="9" value="9"></VRadio>
-      <VRadio label="10" value="10"></VRadio>
-    </VRadioGroup>
-    <VTextField
-      variant="outlined"
-      v-model="form.income"
-      class="m-2 my-5"
-      label="What are your primary sources of income and their approximate monthly amounts after taxes? "
-      hint="Example = iam is senior programmer with monthly rate around SGD 4000 "
-    ></VTextField>
 
-    <VTextField
-      variant="outlined"
-      v-model="form.expenses"
-      class="m-2 my-5"
-      label="What are your major monthly expenses, including any outstanding debts? "
-      hint="Example = my monthly expenses usually are for my family, rent house, and food for around SGD 2300. i have debt in Singapore Bank for my car , its around 400 SGD per month with 40 months left. "
-    ></VTextField>
-
-    <VTextField
-      variant="outlined"
-      v-model="form.investment"
-      class="m-2 my-5"
-      label="What are your current savings and investments, including approximate values? "
-      hint="Example = i have store my $10,000 into fixed income mutual funds investment that can return around 6% per year. im also have rent house that can get around 500SGD monthly "
-    ></VTextField>
-
-    <VTextField
-      variant="outlined"
-      v-model="form.priority"
-      class="m-2 my-5"
-      label="What are your top financial priorities right now? "
-      hint="Example = my most priority are paying off debt, saving money for my upcoming children collague, building an emergency fund "
-    ></VTextField>
-
-    <VTextField
-      variant="outlined"
-      v-model="form.preference"
-      class="m-2 my-5"
-      label="Do you have any specific investment preferences or restrictions? "
-      hint="Example = im okay with regular stock investment, im avoiding some super high risk investment like cryptocurrency "
-    ></VTextField>
-
-    <VBtn
-      @click="submitForm"
-      class="mx-2"
-      variant="flat"
-      color="black"
-      size="x-large"
-      >Here we go</VBtn
-    >
     <div v-if="loading" class="m-10 flex justify-center">
       <VProgressCircular indeterminate color="primary"></VProgressCircular>
       <span class="px-2"

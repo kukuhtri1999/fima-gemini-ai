@@ -1,6 +1,12 @@
 <script setup>
 import { reactive, defineExpose } from 'vue';
 import VCurrency from '@/Components/VCurrency.vue';
+import {
+  debtTypesOpt,
+  incomeSourceOpt,
+  assetTypesOpt,
+  expenseCategoriesOpt,
+} from '../Scripts/SelectOptions';
 
 const props = defineProps({
   currencyNow: String,
@@ -17,124 +23,61 @@ defineExpose({
   formData,
 });
 
-const debtTypes = [
-  'Credit Card Debt',
-  'Mortgage',
-  'Auto Loan',
-  'Student Loan',
-  'Personal Loan',
-  'Medical Debt',
-  'Home Equity Loan',
-  'Business Loan',
-  'Payday Loan',
-  'Tax Debt',
-  'Credit Line',
-  'Retail Store Credit',
-  'Family Loan',
-  'Peer-to-Peer Loan',
-  'Consolidation Loan',
-  'Installment Loan',
-  'Secured Loan',
-  'Unsecured Loan',
-  'Overdraft',
-  'Lease Agreement',
-  'Timeshare Loan',
-  'Boat Loan',
-  'RV Loan',
-  'Motorcycle Loan',
-  'Construction Loan',
-  'Bridge Loan',
-  'Balloon Payment Loan',
-  'Refinanced Loan',
-  'Judgment Lien',
-  'Cosigned Loan',
-  'Other',
-];
+const fillDummy = () => {
+  // Fill incomeSources with 5 dummy data
+  formData.incomeSources = [
+    { source: incomeSourceOpt[0], monthlyAmount: 5000 },
+    { source: incomeSourceOpt[1], monthlyAmount: 3000 },
+    { source: incomeSourceOpt[2], monthlyAmount: 2000 },
+    { source: incomeSourceOpt[3], monthlyAmount: 1500 },
+    { source: incomeSourceOpt[4], monthlyAmount: 1000 },
+  ];
 
-const assetTypes = [
-  'Real Estate',
-  'Stocks',
-  'Bonds',
-  'Mutual Funds',
-  'ETFs',
-  'Savings Accounts',
-  'Certificates of Deposit',
-  'Retirement Accounts (401k, IRA)',
-  'Vehicles',
-  'Jewelry',
-  'Art',
-  'Collectibles',
-  'Business Ownership',
-  'Intellectual Property',
-  'Precious Metals',
-  'Cryptocurrencies',
-  'Life Insurance Policies',
-  'Annuities',
-  'Treasury Securities',
-  'Commodities',
-  'Peer-to-Peer Lending',
-  'Foreign Currency',
-  'Rental Properties',
-  'Equipment',
-  'Livestock',
-  'Other',
-];
+  // Fill monthlyExpenses with 5 dummy data
+  formData.monthlyExpenses = [
+    { category: expenseCategoriesOpt[0], amount: 1000 },
+    { category: expenseCategoriesOpt[1], amount: 800 },
+    { category: expenseCategoriesOpt[2], amount: 600 },
+    { category: expenseCategoriesOpt[3], amount: 400 },
+    { category: expenseCategoriesOpt[4], amount: 200 },
+  ];
 
-const expenseCategories = [
-  'Housing',
-  'Utilities',
-  'Food',
-  'Transportation',
-  'Healthcare',
-  'Insurance',
-  'Debt Payments',
-  'Entertainment',
-  'Education',
-  'Childcare',
-  'Groceries',
-  'Dining Out',
-  'Clothing',
-  'Personal Care',
-  'Household Supplies',
-  'Subscriptions',
-  'Gifts',
-  'Donations',
-  'Vacation/Travel',
-  'Hobbies',
-  'Pets',
-  'Home Maintenance',
-  'Auto Expenses',
-  'Gym Membership',
-  'Cell Phone',
-  'Internet',
-  'Cable/Streaming',
-  'Credit Card Payments',
-  'Student Loans',
-  'Other',
-];
+  // Fill assets with 5 dummy data
+  formData.assets = [
+    { type: assetTypesOpt[0], value: 100000 },
+    { type: assetTypesOpt[1], value: 50000 },
+    { type: assetTypesOpt[2], value: 30000 },
+    { type: assetTypesOpt[3], value: 20000 },
+    { type: assetTypesOpt[4], value: 10000 },
+  ];
 
-const incomeSourceOptions = [
-  'Salary',
-  'Investments',
-  'Rental Income',
-  'Business Income',
-  'Pension',
-  'Social Security',
-  'Disability Benefits',
-  'Unemployment Benefits',
-  'Child Support',
-  'Alimony',
-  'Inheritance',
-  'Lottery Winnings',
-  'Royalties',
-  'Freelance Work',
-  'Consulting Fees',
-  'Interest Income',
-  'Dividend Income',
-  'Capital Gains',
-  'Annuity Payments',
-  'Other Income',
-];
+  // Fill debts with 3 dummy data
+  formData.debts = [
+    {
+      type: debtTypesOpt[0],
+      amount: 50000,
+      dueDate: 60,
+      monthlyInstallment: 1000,
+    },
+    {
+      type: debtTypesOpt[1],
+      amount: 130000,
+      dueDate: 72,
+      monthlyInstallment: 2000,
+    },
+    {
+      type: debtTypesOpt[2],
+      amount: 20000,
+      dueDate: 24,
+      monthlyInstallment: 1500,
+    },
+  ];
+};
+
+// defineExpose({
+//   formData,
+//   fillDummy,
+// });
 
 const rules = {
   required: (value) => !!value || 'Required.',
@@ -142,10 +85,50 @@ const rules = {
 </script>
 
 <template>
-  <div class="personal-informations">
+  <div class="financial-situations">
     <VRow>
       <VCol cols="12">
-        <h4 class="my-3">List All of your Income Sources:</h4>
+        <h2 class="text-h5 mb-4">Understanding Your Financial Situation</h2>
+        <p class="mb-4">
+          Welcome to the Financial Situations section. This part helps you get a
+          clear picture of your overall financial health. We'll guide you
+          through listing your income sources, expenses, assets, and debts. This
+          information is crucial for making informed financial decisions and
+          planning for your future.
+        </p>
+        <p class="mb-4">Here's what you'll need to provide:</p>
+        <ul class="mb-4">
+          <li>
+            <strong>Income Sources:</strong> List all your regular income, such
+            as salary, investments, or rental income.
+          </li>
+          <li>
+            <strong>Expenses:</strong> Detail your monthly spending across
+            various categories like housing, food, and transportation.
+          </li>
+          <li>
+            <strong>Assets:</strong> Include valuable items you own, like
+            property, vehicles, or savings accounts.
+          </li>
+          <li>
+            <strong>Debts:</strong> List any money you owe, including loans,
+            credit cards, or mortgages.
+          </li>
+        </ul>
+        <p class="mb-4">
+          Don't worry if you're not sure about exact figures - your best
+          estimates are fine. The goal is to give you a comprehensive overview
+          of your finances to help you make better financial decisions.
+        </p>
+        <p class="mb-6">
+          Let's get started by filling out your financial information below:
+        </p>
+      </VCol>
+    </VRow>
+
+    <VRow>
+      <VCol cols="12">
+        <h4 class="my-3">List All of your Monthly Income Sources:</h4>
         <VRow
           v-for="(incomeSource, index) in formData.incomeSources"
           :key="index"
@@ -156,14 +139,14 @@ const rules = {
               :rules="[rules.required]"
               label="Income Source"
               variant="outlined"
-              :items="incomeSourceOptions"
+              :items="incomeSourceOpt"
             ></VSelect>
           </VCol>
           <VCol cols="5">
             <VCurrency
               v-model.number="incomeSource.monthlyAmount"
               :rules="[rules.required]"
-              :currency="props.currencyNow"
+              :currency="props.currencyNow.value"
               label="Estimated Monthly Amount"
             ></VCurrency>
           </VCol>
@@ -201,14 +184,14 @@ const rules = {
               :rules="[rules.required]"
               label="Expense Category"
               variant="outlined"
-              :items="expenseCategories"
+              :items="expenseCategoriesOpt"
             ></VSelect>
           </VCol>
           <VCol cols="5">
             <VCurrency
               v-model.number="expense.amount"
               :rules="[rules.required]"
-              :currency="props.currencyNow"
+              :currency="props.currencyNow.value"
               label="Monthly Amount"
             ></VCurrency>
           </VCol>
@@ -246,14 +229,14 @@ const rules = {
               :rules="[rules.required]"
               label="Asset Type"
               variant="outlined"
-              :items="assetTypes"
+              :items="assetTypesOpt"
             ></VSelect>
           </VCol>
           <VCol cols="5">
             <VCurrency
               v-model.number="asset.value"
               :rules="[rules.required]"
-              :currency="props.currencyNow"
+              :currency="props.currencyNow.value"
               label="Estimated Value"
             ></VCurrency>
           </VCol>
@@ -286,14 +269,14 @@ const rules = {
               :rules="[rules.required]"
               label="Debt Type"
               variant="outlined"
-              :items="debtTypes"
+              :items="debtTypesOpt"
             ></VSelect>
           </VCol>
           <VCol cols="3">
             <VCurrency
-              v-model.number="debt.value"
+              v-model.number="debt.amount"
               :rules="[rules.required]"
-              :currency="props.currencyNow"
+              :currency="props.currencyNow.value"
               label="Debt Value"
             ></VCurrency>
           </VCol>
@@ -301,7 +284,7 @@ const rules = {
             <VCurrency
               v-model.number="debt.monthlyInstallment"
               :rules="[rules.required]"
-              :currency="props.currencyNow"
+              :currency="props.currencyNow.value"
               label="Monthly Installment"
             ></VCurrency>
           </VCol>
