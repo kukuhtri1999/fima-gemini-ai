@@ -561,7 +561,7 @@ class HomepageController extends Controller
                 * Assess the feasibility of each selected goal based on the client's financial resources, time horizon, and risk tolerance.
                 * Provide tailored recommendations and action steps to help the client achieve each goal.
             * 3.3 Four Strategy Plans:
-                * Develop three distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes.
+                * Develop four distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes.
                 * Present each strategy with a simulation table illustrating potential financial scenarios based on different assumptions and investment choices.
 
             Additional Instructions:
