@@ -548,17 +548,25 @@ class HomepageController extends Controller
 
             ";
 
-            $chatprompt[2] = "Continuing our conversation, please generate Part 3 of the financial advice document:
+            $chatprompt[2] = "Continuing our conversation, please generate Part 3 of the financial advice document, focusing only on the specific financial goals selected by the client:
 
-            **BAB 3. Goal Analysis:**
+            BAB 3. Goal Analysis:
 
-            * **3.1 Goals Overview and Prioritization:** List and rank the client's short-term, mid-term, and long-term goals.
-            * **3.2 Goal Feasibility and Specific Strategies:** Assess the feasibility of each goal based on the client's financial resources and time horizon. Provide initial recommendations for achieving each goal.
-            * **3.3 Three Strategy Plans:** Develop three distinct strategies with varying levels of risk and potential outcomes, presented with simulation tables showing potential financial scenarios.
+            * 3.1 Goals Overview and Prioritization:
+                * As you can see that the client answer of these question here (also please keep in mind) :
+                $financialGoalPrompt
 
-            **Additional Instructions:**
-            * Estimate missing goal-related values if needed.
-            * Provide actionable and specific strategies tailored to the {$clientData['country']} context.
+                * Based on the client's answer, we can prioritize the goals that are most important to the client.
+            * 3.2 Goal Feasibility and Specific Strategies:
+                * Assess the feasibility of each selected goal based on the client's financial resources, time horizon, and risk tolerance.
+                * Provide tailored recommendations and action steps to help the client achieve each goal.
+            * 3.3 Four Strategy Plans:
+                * Develop three distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes.
+                * Present each strategy with a simulation table illustrating potential financial scenarios based on different assumptions and investment choices.
+
+            Additional Instructions:
+            * Use only information relevant to the client's selected goals.
+            * Provide actionable and specific strategies tailored to the {$clientData['country']} context and the client's financial situation.
             * Use tables for clear presentation of financial simulations.
 
         ";
