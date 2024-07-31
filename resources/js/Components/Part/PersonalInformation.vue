@@ -24,8 +24,8 @@ const fillDummy = () => {
   formData.gender = 'Male';
   formData.martialStatus = 'Single';
   formData.numberOfChildren = 0;
-  formData.country = 'Indonesia';
-  formData.city = 'Jember';
+  formData.country = 'United States';
+  formData.city = 'Washington DC';
   formData.employmentStatus = 'Employed';
   formData.industry = 'Technology';
 };

@@ -10,7 +10,7 @@ import {
 } from '../Scripts/SelectOptions';
 
 const props = defineProps({
-  currencyNow: String,
+  currencyNow: Object,
 });
 
 const emit = defineEmits(['updateCurrency']);

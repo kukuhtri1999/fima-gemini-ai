@@ -9,7 +9,7 @@ import {
 } from '../Scripts/SelectOptions';
 
 const props = defineProps({
-  currencyNow: String,
+  currencyNow: Object,
 });
 
 const formData = reactive({
@@ -26,8 +26,8 @@ defineExpose({
 const fillDummy = () => {
   // Fill incomeSources with 5 dummy data
   formData.incomeSources = [
-    { source: incomeSourceOpt[0], monthlyAmount: 5000 },
-    { source: incomeSourceOpt[1], monthlyAmount: 3000 },
+    { source: incomeSourceOpt[0], monthlyAmount: 2000 },
+    { source: incomeSourceOpt[1], monthlyAmount: 2000 },
     { source: incomeSourceOpt[2], monthlyAmount: 2000 },
     { source: incomeSourceOpt[3], monthlyAmount: 1500 },
     { source: incomeSourceOpt[4], monthlyAmount: 1000 },
@@ -144,8 +144,7 @@ const rules = {
           </VCol>
           <VCol cols="5">
             <VCurrency
-              v-model.number="incomeSource.monthlyAmount"
-              :rules="[rules.required]"
+              v-model="incomeSource.monthlyAmount"
               :currency="props.currencyNow.value"
               label="Estimated Monthly Amount"
             ></VCurrency>
@@ -189,7 +188,7 @@ const rules = {
           </VCol>
           <VCol cols="5">
             <VCurrency
-              v-model.number="expense.amount"
+              v-model="expense.amount"
               :rules="[rules.required]"
               :currency="props.currencyNow.value"
               label="Monthly Amount"
@@ -234,7 +233,7 @@ const rules = {
           </VCol>
           <VCol cols="5">
             <VCurrency
-              v-model.number="asset.value"
+              v-model="asset.value"
               :rules="[rules.required]"
               :currency="props.currencyNow.value"
               label="Estimated Value"
@@ -274,7 +273,7 @@ const rules = {
           </VCol>
           <VCol cols="3">
             <VCurrency
-              v-model.number="debt.amount"
+              v-model="debt.amount"
               :rules="[rules.required]"
               :currency="props.currencyNow.value"
               label="Debt Value"
@@ -282,7 +281,7 @@ const rules = {
           </VCol>
           <VCol cols="3">
             <VCurrency
-              v-model.number="debt.monthlyInstallment"
+              v-model="debt.monthlyInstallment"
               :rules="[rules.required]"
               :currency="props.currencyNow.value"
               label="Monthly Installment"
@@ -290,7 +289,7 @@ const rules = {
           </VCol>
           <VCol cols="2">
             <VTextField
-              v-model.number="debt.dueDate"
+              v-model="debt.dueDate"
               :rules="[rules.required, rules.number]"
               label="Due Date (months)"
               type="number"

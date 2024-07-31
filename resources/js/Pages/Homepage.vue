@@ -4,6 +4,8 @@ import { ref, computed } from 'vue';
 import { marked } from 'marked';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 import MainSection from '@/Components/MainSection.vue';
 import PersonalInformation from '@/Components/Part/PersonalInformation.vue';
 import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
@@ -23,9 +25,53 @@ const form = ref({
   preference: null,
 });
 
-// const props = defineProps({
-//   result: Object,
-// });
+const downloadPDF = async () => {
+  try {
+    const element = document.getElementById('answers');
+
+    // Generate the PDF
+    const canvas = await html2canvas(element, {
+      scale: 2,
+      // This is the margin for the PDF pages
+      width: element.scrollWidth,
+      height: element.scrollHeight,
+    });
+
+    const imgData = canvas.toDataURL('image/png');
+    const pdf = new jsPDF('p', 'mm', 'a4');
+
+    // Add margins
+    const margin = 10; // Margin in mm (3 cm)
+    const pageHeight = pdf.internal.pageSize.height;
+
+    const imgWidth = 210 - 2 * margin; // A4 width in mm minus margins
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    let heightLeft = imgHeight;
+    let position = 0;
+
+    // Add the first page
+    pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+
+    // Add subsequent pages
+    while (heightLeft >= 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+
+    // Save the PDF
+    pdf.save('financial_plan.pdf');
+  } catch (error) {
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: `An error occurred while generating the PDF. Please try again. Error: ${error.message}`,
+    });
+  }
+};
 
 const answer = ref('');
 const loading = ref(false);
@@ -57,30 +103,13 @@ const htmlResult2 = computed(() => marked(result.value[1] || ''));
 const htmlResult3 = computed(() => marked(result.value[2] || ''));
 const htmlResult4 = computed(() => marked(result.value[3] || ''));
 const htmlResult5 = computed(() => marked(result.value[4] || ''));
-// const htmlResult4A = computed(() => marked(result.value[5] || ''));
-// const htmlResult4B = computed(() => marked(result.value[6] || ''));
-// const htmlResult4C = computed(() => marked(result.value[7] || ''));
-// const htmlResult5 = computed(() => marked(result.value[8] || ''));
-// const htmlResult6 = computed(() => marked(result.value[9] || ''));
-
-const fillDummy = () => {
-  form.value.ask = 'I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals';
-  form.value.situation = ' My name is Joe Yang , my age is 23 years old. Im live in Singapore. Im married with 2 child ( age 12 and 6 years old)';
-  form.value.financialGoals = 'I want to buy $50,000 house as soon as possible , i want a financial planning and how much fastest year possible to reach this goals.';
-  form.value.riskScale = 7;
-  form.value.income = 'iam is senior programmer with monthly rate around SGD 4000';
-  form.value.expenses = ' my monthly expenses usually are for my family, rent house, and food for around SGD 2300. i have debt in Singapore Bank for my car , its around 400 SGD per month with 40 months left';
-  form.value.investment = 'i have store my $10,000 into fixed income mutual funds investment that can return around 6% per year. im also have rent house that can get around 500SGD monthly';
-  form.value.priority = 'my most priority are paying off debt, saving money for my upcoming children collague, building an emergency fund';
-  form.value.preference = 'im okay with regular stock investment, im avoiding some super high risk investment like cryptocurrency';
-};
 
 const scrollToForm = () => {
   const formElement = document.getElementById('form');
   formElement.scrollIntoView({ behavior: 'smooth' });
 };
 
-const currencyNow = ref('');
+const currencyNow = ref([]);
 
 const updateCurrency = (newCurrency) => {
   currencyNow.value = newCurrency;
@@ -222,8 +251,8 @@ const test = async () => {
     <div v-if="loading" class="m-10 flex justify-center">
       <VProgressCircular indeterminate color="primary"></VProgressCircular>
       <span class="px-2"
-        >Sit Tight! Fima will create your financial planning in around 3-6
-        minutes 😊
+        >Sit Tight! Fima will create your financial planning in around a minute
+        😊
       </span>
     </div>
     <div class="my-5" id="answers" v-if="showAnswer">
@@ -234,13 +263,13 @@ const test = async () => {
         <div class="font-bold mx-2 text-5xl text-purple-600">💵 fima</div>
         <span class="font-bold text-5xl text-black">Financial Plan</span>
       </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
+      <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 1 : Executive Summary
         </h3>
         <div v-html="htmlResult1" class="markdown-content"></div>
       </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
+      <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 2 : Financial Snapshot
         </h3>
@@ -248,13 +277,13 @@ const test = async () => {
           <div v-html="htmlResult2" class="markdown-content"></div>
         </div>
       </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
+      <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">BAB 3 : Goal Analysis</h3>
         <div class="my-5">
           <div v-html="htmlResult3" class="markdown-content"></div>
         </div>
       </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
+      <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 4 : Recommended Action Plan
         </h3>
@@ -262,12 +291,23 @@ const test = async () => {
           <div v-html="htmlResult4" class="markdown-content"></div>
         </div>
       </div>
-      <div class="py-10 border-y-[1px] solid border-gray-300">
+      <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 5 : Monitoring, Review adn Conclusion
         </h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
       </div>
+    </div>
+    <div class="my-5">
+      <VBtn
+        v-if="showAnswer"
+        @click="downloadPDF"
+        variant="flat"
+        color="primary"
+        size="x-large"
+      >
+        Download This as PDF
+      </VBtn>
     </div>
   </div>
   <div class="bg-black w-full p-5 flex justify-center">

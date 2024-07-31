@@ -529,7 +529,7 @@ class HomepageController extends Controller
 
             **Additional Instructions:**
             * Ensure accuracy in data and calculations.
-            * Write in clear, easy-to-understand language, avoiding jargon.
+            * Write in clear, easy-to-understand language, detailed, avoiding jargon.
             ";
 
 
@@ -544,7 +544,8 @@ class HomepageController extends Controller
             **Additional Instructions:**
             * Estimate missing values based on standard market prices in {$clientData['city']}, {$clientData['country']} if necessary.
             * Use tables and clear formatting for easy readability.
-            * Ensure all calculations are accurate and error-free.
+            * Ensure accuracy in data and calculations. Ensure all calculations are accurate and error-free.
+            * All explanations must be detailed and using easy to understand language
 
             ";
 
@@ -567,7 +568,8 @@ class HomepageController extends Controller
             Additional Instructions:
             * Use only information relevant to the client's selected goals.
             * Provide actionable and specific strategies tailored to the {$clientData['country']} context and the client's financial situation.
-            * Use tables for clear presentation of financial simulations.
+            * Ensure accuracy in data and calculations. Use tables for clear presentation of financial simulations.
+            * All explanations must be detailed and using easy to understand language
 
         ";
 
@@ -575,14 +577,14 @@ class HomepageController extends Controller
 
             **BAB 4. Recommended Action Plan:**
 
-            * **4.1 Cash Flow Management & Investment Planning:** Offer detailed budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance.
-            * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile.
-            * **4.3 Estate, Retirement, & Education Planning:** Provide guidance on estate planning tools, retirement savings strategies, and education funding options, taking into account {$clientData['country']} regulations and cultural considerations.
+            * **4.1 Cash Flow Management & Investment Planning:** Offer detailed and easy to understand language of budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance. please also create 3 best recommendations plan options with data table simulations
+            * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile. please also create 3 best recommendations plan options with data table simulations
+
 
             **Additional Instructions:**
             * Provide specific recommendations for investments, budgeting, debt repayment, etc.
             * Include tables to illustrate repayment scenarios, investment allocations, and projected outcomes.
-            * Ensure all financial calculations are accurate and relevant to {$clientData['country']} . client never forgive us if theres any incorrect data or calculations.
+            * Ensure all financial calculations are accurate and relevant to {$clientData['country']} . Ensure accuracy in data and calculations. client never forgive us if theres any incorrect data or calculations.
 
             ";
 
@@ -598,6 +600,7 @@ class HomepageController extends Controller
             * Reiterate the key points of the financial plan in clear and concise language.
             * Emphasize the ongoing nature of financial planning and the need for flexibility.
             * Offer encouragement and support to the client in their financial journey.
+
 
             ";
 

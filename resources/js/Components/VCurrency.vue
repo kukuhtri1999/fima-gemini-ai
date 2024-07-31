@@ -5,12 +5,12 @@ import { watch } from 'vue';
 const props = defineProps({ modelValue: Number, currency: String });
 
 const { inputRef, formattedValue, setValue } = useCurrencyInput({
-  currency: 'IDR',
+  currency: 'USD',
   currencyDisplay: 'hidden',
   hideCurrencySymbolOnFocus: false,
   hideGroupingSeparatorOnFocus: false,
   precision: 2,
-  valueRange: { min: 0 },
+  valueRange: { min: 0, max: 9999999999999999999999 },
   autoDecimalDigits: true,
 });
 
