@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, defineExpose } from 'vue';
+import { reactive } from 'vue';
 import VCurrency from '@/Components/VCurrency.vue';
 import {
   debtTypesOpt,

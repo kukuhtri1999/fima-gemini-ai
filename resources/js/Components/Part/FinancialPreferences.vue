@@ -1,5 +1,5 @@
 <script setup>
-import { reactive, defineExpose } from 'vue';
+import { reactive } from 'vue';
 import {
   investmentOpt,
   investmentRestrictionOpt,
