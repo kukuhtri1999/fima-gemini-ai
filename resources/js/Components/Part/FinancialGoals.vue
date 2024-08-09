@@ -58,7 +58,7 @@ const fillDummy = () => {
   formData.financialGoal = 'Debt Reduction';
   formData.debtTypes = ['Mortgage', 'Business Loans', 'Home Equity Loans'];
   formData.debtBalances = 200000;
-  formData.debtMinPayments = 5000;
+  formData.debtMinPayments = 4500;
   formData.debtInterestRates = 10.5;
   formData.debtPayoffTimeframe = 24;
   formData.riskScale = '5';
