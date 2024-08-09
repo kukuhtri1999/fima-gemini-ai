@@ -575,8 +575,24 @@ const removeChild = (index) => {
         <VRadio label="10" value="10"></VRadio>
       </VRadioGroup>
     </div>
-    <VBtn @click="fillDummy" class="m-2" variant="flat" color="black"
-      >Fill Dummy Data</VBtn
-    >
+    <div class="flex my-5">
+      <VBtn
+        @click="$emit('changeTab', 'one')"
+        class="m-2"
+        variant="flat"
+        color="secondary"
+        >Previous</VBtn
+      >
+      <VBtn @click="fillDummy" class="m-2" variant="flat" color="black"
+        >Fill Dummy Data</VBtn
+      >
+      <VBtn
+        @click="$emit('changeTab', 'three')"
+        class="m-2"
+        variant="flat"
+        color="secondary"
+        >Next</VBtn
+      >
+    </div>
   </div>
 </template>

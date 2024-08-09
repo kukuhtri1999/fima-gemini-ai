@@ -6,71 +6,41 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
 import html2canvas from 'html2canvas';
+import html2pdf from 'html2pdf.js';
 import MainSection from '@/Components/MainSection.vue';
 import PersonalInformation from '@/Components/Part/PersonalInformation.vue';
 import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
 import FinancialSituations from '@/Components/Part/FinancialSituations.vue';
 import FinancialPreferences from '@/Components/Part/FinancialPreferences.vue';
 
-// const form = ref({
-//   _method: 'POST',
-//   ask: null,
-//   situation: null,
-//   financialGoals: null,
-//   riskScale: null,
-//   income: null,
-//   expenses: null,
-//   investment: null,
-//   priority: null,
-//   preference: null,
-// });
+const clientName = ref('');
 
-const downloadPDF = async () => {
-  try {
-    const element = document.getElementById('answers');
+const downloadPDF = () => {
+  const doc = new jsPDF({
+    unit: 'pt',
+    format: 'a4',
+    orientation: 'portrait',
+  });
 
-    // Generate the PDF
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      // This is the margin for the PDF pages
-      width: element.scrollWidth,
-      height: element.scrollHeight,
-    });
+  const element = document.getElementById('answers');
 
-    const imgData = canvas.toDataURL('image/png');
-    const pdf = new jsPDF('p', 'mm', 'a4');
-
-    // Add margins
-    const margin = 10; // Margin in mm (3 cm)
-    const pageHeight = pdf.internal.pageSize.height;
-
-    const imgWidth = 210 - 2 * margin; // A4 width in mm minus margins
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-
-    let heightLeft = imgHeight;
-    let position = 0;
-
-    // Add the first page
-    pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-    heightLeft -= pageHeight;
-
-    // Add subsequent pages
-    while (heightLeft >= 0) {
-      position = heightLeft - imgHeight;
-      pdf.addPage();
-      pdf.addImage(imgData, 'PNG', margin, position, imgWidth, imgHeight);
-      heightLeft -= pageHeight;
-    }
-
-    // Save the PDF
-    pdf.save('financial_plan.pdf');
-  } catch (error) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: `An error occurred while generating the PDF. Please try again. Error: ${error.message}`,
-    });
-  }
+  const fileName = `Financial Plan for ${clientName.value}.pdf`;
+  // Adding the HTML content to the PDF
+  doc.html(element, {
+    callback(doc) {
+      doc.save(fileName);
+    },
+    margin: [56, 56, 56, 56], // 2cm margins on all sides
+    x: 0,
+    y: 0,
+    html2canvas: {
+      scale: 0.8, // Adjust for better quality, higher scale = higher quality but slower
+    },
+    autoPaging: 'text', // Ensure that the content flows naturally onto the next page
+    pagebreak: { mode: 'avoid-all', after: '.bab' },
+    width: 425, // Max width of content on PDF page (210mm - 30mm left margin - 30mm right margin)
+    windowWidth: 600, // Width of the viewport for rendering
+  });
 };
 
 const answer = ref('');
@@ -79,25 +49,6 @@ const showAnswer = ref(false);
 const result = ref([]);
 const tab = ref('');
 
-// const submitForm = async () => {
-//   showAnswer.value = false;
-//   loading.value = true;
-//   answer.value = '';
-//   try {
-//     const response = await axios.post(route('home.chat'), form.value);
-//     result.value = response.data.result;
-//     showAnswer.value = true;
-//     loading.value = false;
-//   } catch (error) {
-//     loading.value = false;
-//     console.error(error);
-//     Swal.fire({
-//       icon: 'error',
-//       title: 'Oops...',
-//       text: `An error occurred. Please try again. Error : ${error}`,
-//     });
-//   }
-// };
 const htmlResult1 = computed(() => marked(result.value[0] || ''));
 const htmlResult2 = computed(() => marked(result.value[1] || ''));
 const htmlResult3 = computed(() => marked(result.value[2] || ''));
@@ -107,6 +58,12 @@ const htmlResult5 = computed(() => marked(result.value[4] || ''));
 const scrollToForm = () => {
   const formElement = document.getElementById('form');
   formElement.scrollIntoView({ behavior: 'smooth' });
+};
+
+const changeTab = (index) => {
+  tab.value = index;
+  const introElement = document.getElementById('intro');
+  introElement.scrollIntoView({ behavior: 'smooth' });
 };
 
 const currencyNow = ref([]);
@@ -120,13 +77,15 @@ const field2 = ref(null);
 const field3 = ref(null);
 const field4 = ref(null);
 
-const test = async () => {
+const submitForm = async () => {
   const dataForm = {
     field1: field1.value ? field1.value.formData : {},
     field2: field2.value ? field2.value.formData : {},
     field3: field3.value ? field3.value.formData : {},
     field4: field4.value ? field4.value.formData : {},
   };
+
+  clientName.value = dataForm.field1.fullName;
   console.log('Submitted data:', dataForm);
   // Handle form submission, e.g., send data to an API
   showAnswer.value = false;
@@ -192,7 +151,7 @@ const test = async () => {
         >Money</span
       >🪄
     </div>
-    <p class="my-5 mx-2">
+    <p class="my-5 mx-2" id="intro">
       Lets hear what's your problem or what's kind of advise do you need. Fima
       need to know about you and your financial conditions. please fill all our
       questions below so Fima can prepare your Financial Planning for you. Dont
@@ -209,25 +168,34 @@ const test = async () => {
 
       <VWindow v-model="tab">
         <VWindowItem value="one" class="p-5">
-          <PersonalInformation ref="field1" />
+          <PersonalInformation ref="field1" @change-tab="changeTab" />
         </VWindowItem>
         <VWindowItem value="two" class="p-5">
           <FinancialGoals
             ref="field2"
             :currencyNow="currencyNow"
             @updateCurrency="updateCurrency"
+            @change-tab="changeTab"
           />
         </VWindowItem>
         <VWindowItem value="three" class="p-5">
-          <FinancialSituations ref="field3" :currencyNow="currencyNow" />
+          <FinancialSituations
+            ref="field3"
+            :currencyNow="currencyNow"
+            @change-tab="changeTab"
+          />
         </VWindowItem>
         <VWindowItem value="four" class="p-5">
-          <FinancialPreferences ref="field4" :currencyNow="currencyNow" />
+          <FinancialPreferences
+            ref="field4"
+            :currencyNow="currencyNow"
+            @change-tab="changeTab"
+          />
         </VWindowItem>
       </VWindow>
     </div>
     <div class="my-5">
-      <VBtn @click="test" variant="flat" color="primary" size="x-large"
+      <VBtn @click="submitForm" variant="flat" color="primary" size="x-large"
         >Create My Financial Plan</VBtn
       >
 
@@ -253,7 +221,7 @@ const test = async () => {
       <!-- <p v-for="(line, index) in result.split('\n')" :key="index">{{ line }}</p>
      -->
       <div class="flex justify-center py-5 animate1">
-        <div class="font-bold mx-2 text-5xl text-purple-600">💵 fima</div>
+        <div class="font-bold mx-2 text-5xl text-purple-600">fima</div>
         <span class="font-bold text-5xl text-black">Financial Plan</span>
       </div>
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
@@ -262,6 +230,7 @@ const test = async () => {
         </h3>
         <div v-html="htmlResult1" class="markdown-content"></div>
       </div>
+      <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 2 : Financial Snapshot
@@ -270,12 +239,14 @@ const test = async () => {
           <div v-html="htmlResult2" class="markdown-content"></div>
         </div>
       </div>
+      <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">BAB 3 : Goal Analysis</h3>
         <div class="my-5">
           <div v-html="htmlResult3" class="markdown-content"></div>
         </div>
       </div>
+      <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
           BAB 4 : Recommended Action Plan
@@ -284,9 +255,10 @@ const test = async () => {
           <div v-html="htmlResult4" class="markdown-content"></div>
         </div>
       </div>
+      <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 5 : Monitoring, Review adn Conclusion
+          BAB 5 : Monitoring, Review and Conclusion
         </h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
       </div>
@@ -364,5 +336,19 @@ const test = async () => {
 }
 .markdown-content li {
   margin: 15px 0;
+}
+
+/* Reduce the font size globally for the PDF */
+#answers {
+  font-size: 14px;
+  line-height: 1.4;
+  word-spacing: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Specific adjustments for headings and other elements */
+#answers h3 {
+  font-size: 20px !important; /* Slightly larger font for headings */
+  font-weight: bold;
 }
 </style>

@@ -494,7 +494,10 @@ class HomepageController extends Controller
 
 
             $chatprompt = null;
-            $chatprompt[0] = " Continuing our conversation, please generate Part 1 of the financial advice document:
+            $chatprompt[0] = "
+            $prompt
+
+            Continuing our conversation, please generate Part 1 of the financial advice document with more than 2000 words:
 
             **BAB 1. Executive Summary:**
             * Provide a concise overview of the client's financial situation, goals, and key recommendations.
@@ -509,23 +512,30 @@ class HomepageController extends Controller
             ";
 
 
-            $chatprompt[1] = " Continuing our conversation, please generate Part 2 of the financial advice document:
+            $chatprompt[1] = "
+            $prompt
+
+            Continuing our conversation, please generate Part 2 of the financial advice document with more than 2000 words:
 
             **BAB 2. Financial Snapshot:**
 
-            * **2.1 Income and Expense Statement:**  Create a detailed table showing income sources, expense categories, and net cash flow. please make sure the calculations are corrects
+            * **2.1 Income, Expense, Debt Statement:**  Create a detailed table showing income sources, expense categories, debt/liabilities monthly categories, and net cash flow. please make sure the calculations are corrects
             * **2.2 Net Worth Statement:** Create a table summarizing assets and liabilities to calculate net worth. please make sure the calculations are corrects
             * **2.3 Key Financial Ratios:** Calculate and explain relevant ratios like debt-to-income and savings rate. please make sure the calculations are corrects
 
             **Additional Instructions:**
             * Estimate missing values based on standard market prices in {$clientData['city']}, {$clientData['country']} if necessary.
-            * Use tables and clear formatting for easy readability.
+            * Use tables and clear formatting for easy readability. amd make sure the calculations are correct
             * Ensure accuracy in data and calculations. Ensure all calculations are accurate and error-free.
             * All explanations must be detailed and using easy to understand language with links to relevant financial terms.
+            * Lets assume that your client is someone who doesnt know anything about financial plan and financial terms, please explain all of these detailed and make your client fully understand every each of your words
 
             ";
 
-            $chatprompt[2] = "Continuing our conversation, please generate Part 3 of the financial advice document, focusing only on the specific financial goals selected by the client:
+            $chatprompt[2] = "
+            $prompt
+
+            Continuing our conversation, please generate Part 3 of the financial advice document, focusing only on the specific financial goals selected by the client with more than 2000 words:
 
             BAB 3. Goal Analysis:
 
@@ -547,25 +557,33 @@ class HomepageController extends Controller
             * Ensure accuracy in data and calculations. Use tables for clear presentation of financial simulations.
             * All explanations must be detailed and using easy to understand language
             * Add links to explain any financial terms or strategies mentioned.
+            * Lets assume that your client is someone who doesnt know anything about financial plan and financial terms, please explain all of these detailed and make your client fully understand every each of your words
 
             ";
 
-            $chatprompt[3] = " Continuing our conversation, please generate Part 4 of the financial advice document:
+            $chatprompt[3] = " $prompt
+
+            Continuing our conversation, please generate Part 4 of the financial advice document with more than 2000 words:
 
             **BAB 4. Recommended Action Plan:**
 
             * **4.1 Cash Flow Management & Investment Planning:** Offer detailed and easy to understand language of budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
             * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
+            * **4.3 Other Recommended Action Plan:** Provide detailed with some example simulations until the financial goals reached of additional financial planning recommendations tailored to the client's specific situation and goals based on this client financial goals :
+
+            $financialGoalPrompt
 
 
             **Additional Instructions:**
             * Provide specific recommendations for investments, budgeting, debt repayment, etc.
             * Include tables to illustrate repayment scenarios, investment allocations, and projected outcomes.
             * Ensure all financial calculations are accurate and relevant to {$clientData['country']} . Ensure accuracy in data and calculations. client never forgive us if theres any incorrect data or calculations.
-            * Add links to explain any financial terms or strategies mentioned.
+            * Lets assume that your client is someone who doesnt know anything about financial plan and financial terms, please explain all of these detailed and make your client fully understand every each of your words
             ";
 
-            $chatprompt[4] = " Continuing our conversation, please generate the final part of the financial advice document:
+            $chatprompt[4] = " $prompt
+
+            Continuing our conversation, please generate the final part of the financial advice document with more than 2000 words:
 
             **BAB 5. Monitoring, Review, and Conclusion:**
 
@@ -578,6 +596,7 @@ class HomepageController extends Controller
             * Emphasize the ongoing nature of financial planning and the need for flexibility.
             * Offer encouragement and support to the client in their financial journey.
             * Include links to relevant financial terms or concepts that may be unfamiliar.
+            * Lets assume that your client is someone who doesnt know anything about financial plan and financial terms, please explain all of these detailed and make your client fully understand every each of your words
             ";
 
             $chat = Gemini::chat()

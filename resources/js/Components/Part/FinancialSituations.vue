@@ -322,8 +322,24 @@ const rules = {
       </VCol>
     </VRow>
 
-    <VBtn @click="fillDummy" class="my-2 mt-10" variant="flat" color="black"
-      >Fill Dummy Data</VBtn
-    >
+    <div class="flex my-5">
+      <VBtn
+        @click="$emit('changeTab', 'two')"
+        class="m-2"
+        variant="flat"
+        color="secondary"
+        >Previous</VBtn
+      >
+      <VBtn @click="fillDummy" class="m-2" variant="flat" color="black"
+        >Fill Dummy Data</VBtn
+      >
+      <VBtn
+        @click="$emit('changeTab', 'four')"
+        class="m-2"
+        variant="flat"
+        color="secondary"
+        >Next</VBtn
+      >
+    </div>
   </div>
 </template>

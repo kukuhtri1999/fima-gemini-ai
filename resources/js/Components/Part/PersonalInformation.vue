@@ -148,8 +148,17 @@ const rules = {
       class="m-2 my-5"
       label="Industry"
     ></VTextField>
-    <VBtn @click="fillDummy" class="m-2" variant="flat" color="black"
-      >Fill Dummy Data</VBtn
-    >
+    <div class="flex my-5">
+      <VBtn @click="fillDummy" class="m-2" variant="flat" color="black"
+        >Fill Dummy Data</VBtn
+      >
+      <VBtn
+        @click="$emit('changeTab', 'two')"
+        class="m-2"
+        variant="flat"
+        color="secondary"
+        >Next</VBtn
+      >
+    </div>
   </div>
 </template>
