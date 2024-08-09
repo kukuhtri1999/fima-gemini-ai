@@ -68,7 +68,7 @@ const fillDummy = () => {
 
 const rules = {
   required: (value) => !!value || 'Required.',
-  min: (v) => v >= 0 || 'Cannot be null or negative',
+  //   min: (v) => v >= 0 || 'Cannot be null or negative',
 };
 
 defineExpose({
@@ -157,12 +157,35 @@ const removeChild = (index) => {
         class="m-2 my-2"
         variant="outlined"
       ></VTextField>
-      <VTextarea
+      <VSelect
         v-model="formData.retirementLifestyle"
         label="What kind of lifestyle do you envision in retirement?"
         class="m-2 my-2"
         variant="outlined"
-      ></VTextarea>
+        multiple
+        :items="[
+          'Traveling extensively',
+          'Pursuing hobbies',
+          'Spending time with family',
+          'Volunteering',
+          'Starting a new business',
+          'Continuing part-time work',
+          'Living in a retirement community',
+          'Downsizing to a smaller home',
+          'Relocating to a different area',
+          'Focusing on health and wellness',
+          'Learning new skills',
+          'Engaging in cultural activities',
+          'Gardening and outdoor activities',
+          'Mentoring younger generations',
+          'Writing a book or memoir',
+          'Participating in sports',
+          'Exploring spirituality',
+          'Collecting art or antiques',
+          'Enjoying fine dining',
+          'Adopting a minimalist lifestyle',
+        ]"
+      />
       <VTextField
         v-model="formData.retirementLocation"
         label="Where do you plan to live?"
@@ -417,7 +440,7 @@ const removeChild = (index) => {
       v-if="formData.financialGoal === 'Starting a Business'"
     >
       <VSelect
-        v-model="formData.businessTypeOpt"
+        v-model="formData.businessType"
         :items="businessTypeOpt"
         label="What type of business are you planning to start?"
         class="m-2"

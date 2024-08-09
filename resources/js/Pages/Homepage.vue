@@ -12,18 +12,18 @@ import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
 import FinancialSituations from '@/Components/Part/FinancialSituations.vue';
 import FinancialPreferences from '@/Components/Part/FinancialPreferences.vue';
 
-const form = ref({
-  _method: 'POST',
-  ask: null,
-  situation: null,
-  financialGoals: null,
-  riskScale: null,
-  income: null,
-  expenses: null,
-  investment: null,
-  priority: null,
-  preference: null,
-});
+// const form = ref({
+//   _method: 'POST',
+//   ask: null,
+//   situation: null,
+//   financialGoals: null,
+//   riskScale: null,
+//   income: null,
+//   expenses: null,
+//   investment: null,
+//   priority: null,
+//   preference: null,
+// });
 
 const downloadPDF = async () => {
   try {
@@ -79,25 +79,25 @@ const showAnswer = ref(false);
 const result = ref([]);
 const tab = ref('');
 
-const submitForm = async () => {
-  showAnswer.value = false;
-  loading.value = true;
-  answer.value = '';
-  try {
-    const response = await axios.post(route('home.chat'), form.value);
-    result.value = response.data.result;
-    showAnswer.value = true;
-    loading.value = false;
-  } catch (error) {
-    loading.value = false;
-    console.error(error);
-    Swal.fire({
-      icon: 'error',
-      title: 'Oops...',
-      text: `An error occurred. Please try again. Error : ${error}`,
-    });
-  }
-};
+// const submitForm = async () => {
+//   showAnswer.value = false;
+//   loading.value = true;
+//   answer.value = '';
+//   try {
+//     const response = await axios.post(route('home.chat'), form.value);
+//     result.value = response.data.result;
+//     showAnswer.value = true;
+//     loading.value = false;
+//   } catch (error) {
+//     loading.value = false;
+//     console.error(error);
+//     Swal.fire({
+//       icon: 'error',
+//       title: 'Oops...',
+//       text: `An error occurred. Please try again. Error : ${error}`,
+//     });
+//   }
+// };
 const htmlResult1 = computed(() => marked(result.value[0] || ''));
 const htmlResult2 = computed(() => marked(result.value[1] || ''));
 const htmlResult3 = computed(() => marked(result.value[2] || ''));
@@ -198,14 +198,7 @@ const test = async () => {
       questions below so Fima can prepare your Financial Planning for you. Dont
       worry, we dont save any of your data here in our database. I Promise 😉
     </p>
-    <VBtn
-      @click="fillDummy"
-      class="m-2"
-      variant="flat"
-      color="black"
-      size="x-large"
-      >Fill Dummy</VBtn
-    >
+
     <div class="tab-form border-[1px] mt-5 solid border-primary rounded-lg">
       <VTabs v-model="tab" bg-color="secondaryLight" color="secondary">
         <VTab value="one">Personal Information</VTab>

@@ -59,11 +59,11 @@ class HomepageController extends Controller
         $conditionalRules = [
             'Retirement Planning' => [
                 'field2.retirementAge' => 'required|integer',
-                'field2.retirementLifestyle' => 'required|string',
+                'field2.retirementLifestyle' => 'required',
                 'field2.retirementLocation' => 'required|string',
                 'field2.retirementActivities' => 'required|string',
                 'field2.retirementIncome' => 'required|numeric',
-                'field2.existingRetirementAccounts' => 'required|string',
+                'field2.existingRetirementAccounts' => 'required',
                 'field2.existingRetirementAccountsBalance' => 'required|numeric',
                 'field2.socialSecurityIncome' => 'required|numeric',
             ],
@@ -93,7 +93,7 @@ class HomepageController extends Controller
                 'field2.businessType' => 'required|string',
                 'field2.startupCosts' => 'required|numeric',
                 'field2.operatingExpenses' => 'required|numeric',
-                'field2.businessFinancing' => 'required|string',
+                'field2.businessFinancing' => 'required',
                 'field2.businessLaunchTimeframe' => 'required|integer',
             ],
             'Travel' => [
@@ -329,7 +329,7 @@ class HomepageController extends Controller
             case 'Retirement Planning':
                 $financialGoalPrompt = "
             At what age do you plan to retire? {$clientData['retirementAge']}
-            What kind of lifestyle do you envision in retirement?? {$clientData['retirementLifestyle']}
+            What kind of lifestyle do you envision in retirement?? " . implode(', ', $clientData['retirementLifestyle']) . "
             Where do you plan to live during retirement? {$clientData['retirementLocation']}
             What activities or hobbies do you want to pursue in during retirement? {$clientData['retirementActivities']}
             What is your income per month do you estimate you'll need to maintain your desired lifestyle? {$clientData['currency']} {$clientData['retirementIncome']}
@@ -394,7 +394,7 @@ class HomepageController extends Controller
             What type of business do you want to start? {$clientData['businessType']}
             What are the estimated startup costs for your business? {$clientData['currency']} {$clientData['startupCosts']}
             What are the estimated monthly operating expenses for your business? {$clientData['currency']} {$clientData['operatingExpenses']}
-            How do you plan to finance your business? {$clientData['businessFinancing']}
+            How do you plan to finance your business? " . implode(', ', $clientData['businessFinancing']) . "
             When do you plan to launch your business in months? {$clientData['businessLaunchTimeframe']} months
             ";
                 break;
@@ -442,11 +442,6 @@ class HomepageController extends Controller
 
         try {
 
-            // dd($request->all());
-            // $response = Gemini::models()->list();
-            // dd($response->models);
-            // dd($request);
-            // Validate the request
             $validated = $this->validateRequest($request);
 
             // Collect client data from the request
@@ -454,66 +449,46 @@ class HomepageController extends Controller
 
             $financialGoalPrompt = $this->generateFinancialGoalPrompt($clientData);
 
-            // dd($financialGoalPrompt);
-
-            // Format the prompt
-            //     $prompt = "
-            // You are an expert financial advisor fluent in multiple languages. Analyze the following client information and generate a detailed financial advice document in the client's preferred language:
-
-            // Client Responses:
-            // 1. Tell me whats your financial problem or what financial advise that you need ?: {$clientData['ask']}
-            // 2. Tell me whats your name, age, where do you live, martial status, how many child you have ( and age of each child ) : {$clientData['situation']}
-            // 3. Tell me your top 3 financial goals and when you want to achieve these goals : {$clientData['financialGoals']}
-            // 4. On a scale of 1 to 10, how comfortable are you with taking risks in your investments? (1-10): {$clientData['riskScale']}
-            // 5. What are your primary sources of income and their approximate monthly amounts after taxes? : {$clientData['income']}
-            // 6. What are your major monthly expenses, including any outstanding debts? : {$clientData['expenses']}
-            // 7. What are your current savings and investments, including approximate values? : {$clientData['investment']}
-            // 8. What are your top financial priorities right now? : {$clientData['priority']}
-            // 9. Do you have any specific investment preferences or restrictions? : {$clientData['preference']}
-
-            // I need high detailed of financial advise for this person. I will split it into 5 big BAB part of document one by one on the next chat , just wait for it for now.
-            // ";
-
             $prompt = "
-        You are an expert financial advisor fluent in multiple languages. Analyze the following client information and generate a detailed financial advice document in the client's preferred language:
+            You are an expert financial advisor fluent in multiple languages. Analyze the following client information and generate a detailed financial advice document in the {$clientData['country']} language:
 
-        Client Information:
-        1. Full Name: {$clientData['fullName']}
-        2. Age: {$clientData['age']}
-        3. Gender: {$clientData['gender']}
-        4. Marital Status: {$clientData['martialStatus']}
-        5. Number of Children: {$clientData['numberOfChildren']}
-        6. Country: {$clientData['country']}
-        7. City: {$clientData['city']}
-        8. Employment Status: {$clientData['employmentStatus']}
-        9. Industry: {$clientData['industry']}
+            Client Information:
+            1. Full Name: {$clientData['fullName']}
+            2. Age: {$clientData['age']}
+            3. Gender: {$clientData['gender']}
+            4. Marital Status: {$clientData['martialStatus']}
+            5. Number of Children: {$clientData['numberOfChildren']}
+            6. Country: {$clientData['country']}
+            7. City: {$clientData['city']}
+            8. Employment Status: {$clientData['employmentStatus']}
+            9. Industry: {$clientData['industry']}
 
-        Financial Goal Information:
-        10. Preferred Currency: {$clientData['currency']}
-        11. Financial Goal: {$clientData['financialGoal']}
-        12. Risk Tolerance (1-10): {$clientData['riskScale']}
+            Financial Goal Information:
+            10. Preferred Currency: {$clientData['currency']}
+            11. Financial Goal: {$clientData['financialGoal']}
+            12. Risk Tolerance (1-10): {$clientData['riskScale']}
 
-        Additional FInancial Goal Informations:
-        $financialGoalPrompt
+            Additional FInancial Goal Informations:
+            $financialGoalPrompt
 
-        Financial Situation Income and Expenses:
-        13. Income Sources:
-        " . $this->formatArrayData($clientData['incomeSources'], ['source', 'monthlyAmount'], $clientData['currency']) . "
-        14. Monthly Expenses:
-        " . $this->formatArrayData($clientData['monthlyExpenses'], ['category', 'amount'], $clientData['currency']) . "
-        15. Assets:
-        " . $this->formatArrayData($clientData['assets'], ['type', 'value'], $clientData['currency']) . "
-        16. Debts:
-        " . $this->formatArrayData($clientData['debts'], ['type', 'amount', 'dueDate', 'monthlyInstallment'], $clientData['currency']) . "
+            Financial Situation Income and Expenses:
+            13. Income Sources:
+            " . $this->formatArrayData($clientData['incomeSources'], ['source', 'monthlyAmount'], $clientData['currency']) . "
+            14. Monthly Expenses:
+            " . $this->formatArrayData($clientData['monthlyExpenses'], ['category', 'amount'], $clientData['currency']) . "
+            15. Assets:
+            " . $this->formatArrayData($clientData['assets'], ['type', 'value'], $clientData['currency']) . "
+            16. Debts:
+            " . $this->formatArrayData($clientData['debts'], ['type', 'amount', 'dueDate', 'monthlyInstallment'], $clientData['currency']) . "
 
-        Additional Financial Information:
-        17. Investment Preferences: " . implode(', ', $clientData['investmentPreferences']) . "
-        18. Investment Restrictions: " . implode(', ', $clientData['investmentRestrictions']) . "
-        19. Insurance Coverage: " . implode(', ', $clientData['insuranceCoverage']) . "
-        20. Additional Financial Concerns: {$clientData['additionalConcerns']}
+            Additional Financial Information:
+            17. Investment Preferences: " . implode(', ', $clientData['investmentPreferences']) . "
+            18. Investment Restrictions: " . implode(', ', $clientData['investmentRestrictions']) . "
+            19. Insurance Coverage: " . implode(', ', $clientData['insuranceCoverage']) . "
+            20. Additional Financial Concerns: {$clientData['additionalConcerns']}
 
-        I need a highly detailed financial but easy to understands advice for this person. I will split it into 5 main sections of the document one by one in the next chat, so please wait for further instructions.
-        ";
+            I need a highly detailed financial but easy to understands advice for this person. I will split it into 5 main sections of the document one by one in the next chat, so please wait for further instructions.
+            ";
 
             // dd($prompt);
 
@@ -530,6 +505,7 @@ class HomepageController extends Controller
             **Additional Instructions:**
             * Ensure accuracy in data and calculations.
             * Write in clear, easy-to-understand language, detailed, avoiding jargon.
+            * Add links to explain any financial terms or concepts that may be unfamiliar to the client, such as [net worth](#), [cash flow](#), [risk tolerance](#), etc.
             ";
 
 
@@ -537,15 +513,15 @@ class HomepageController extends Controller
 
             **BAB 2. Financial Snapshot:**
 
-            * **2.1 Income and Expense Statement:**  Create a detailed table showing income sources, expense categories, and net cash flow.
-            * **2.2 Net Worth Statement:** Create a table summarizing assets and liabilities to calculate net worth.
-            * **2.3 Key Financial Ratios:** Calculate and explain relevant ratios like debt-to-income and savings rate.
+            * **2.1 Income and Expense Statement:**  Create a detailed table showing income sources, expense categories, and net cash flow. please make sure the calculations are corrects
+            * **2.2 Net Worth Statement:** Create a table summarizing assets and liabilities to calculate net worth. please make sure the calculations are corrects
+            * **2.3 Key Financial Ratios:** Calculate and explain relevant ratios like debt-to-income and savings rate. please make sure the calculations are corrects
 
             **Additional Instructions:**
             * Estimate missing values based on standard market prices in {$clientData['city']}, {$clientData['country']} if necessary.
             * Use tables and clear formatting for easy readability.
             * Ensure accuracy in data and calculations. Ensure all calculations are accurate and error-free.
-            * All explanations must be detailed and using easy to understand language
+            * All explanations must be detailed and using easy to understand language with links to relevant financial terms.
 
             ";
 
@@ -562,73 +538,57 @@ class HomepageController extends Controller
                 * Assess the feasibility of each selected goal based on the client's financial resources, time horizon, and risk tolerance.
                 * Provide tailored recommendations and action steps to help the client achieve each goal.
             * 3.3 Four Strategy Plans:
-                * Develop four distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes.
-                * Present each strategy with a simulation table illustrating potential financial scenarios based on different assumptions and investment choices.
+                * Develop four distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes. with detailed explanations
+                * Present each strategy with few and full simulation table illustrating potential financial scenarios based on different assumptions and investment choices. with detailed explanations
 
             Additional Instructions:
             * Use only information relevant to the client's selected goals.
             * Provide actionable and specific strategies tailored to the {$clientData['country']} context and the client's financial situation.
             * Ensure accuracy in data and calculations. Use tables for clear presentation of financial simulations.
             * All explanations must be detailed and using easy to understand language
+            * Add links to explain any financial terms or strategies mentioned.
 
-        ";
+            ";
 
             $chatprompt[3] = " Continuing our conversation, please generate Part 4 of the financial advice document:
 
             **BAB 4. Recommended Action Plan:**
 
-            * **4.1 Cash Flow Management & Investment Planning:** Offer detailed and easy to understand language of budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance. please also create 3 best recommendations plan options with data table simulations
-            * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile. please also create 3 best recommendations plan options with data table simulations
+            * **4.1 Cash Flow Management & Investment Planning:** Offer detailed and easy to understand language of budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
+            * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
 
 
             **Additional Instructions:**
             * Provide specific recommendations for investments, budgeting, debt repayment, etc.
             * Include tables to illustrate repayment scenarios, investment allocations, and projected outcomes.
             * Ensure all financial calculations are accurate and relevant to {$clientData['country']} . Ensure accuracy in data and calculations. client never forgive us if theres any incorrect data or calculations.
-
+            * Add links to explain any financial terms or strategies mentioned.
             ";
 
             $chatprompt[4] = " Continuing our conversation, please generate the final part of the financial advice document:
 
             **BAB 5. Monitoring, Review, and Conclusion:**
 
-            * **5.1 Monitoring and Review Schedule:** Outline a timeline for regular review and adjustments to the financial plan.
-            * **5.2 Contingency Planning:** Discuss potential risks and how to adapt the plan if circumstances change.
-            * **5.3 Conclusion:** Summarize the key findings and recommendations, emphasizing the importance of taking action and seeking professional guidance when needed.
+            * **5.1 Monitoring and Review Schedule:** Outline a timeline for regular review and adjustments to the financial plan. with detailed explanations
+            * **5.2 Contingency Planning:** Discuss potential risks and how to adapt the plan if circumstances change. with detailed explanations
+            * **5.3 Conclusion:** Summarize the key findings and recommendations, emphasizing the importance of taking action and seeking professional guidance when needed. with detailed explanations
 
             **Additional Instructions:**
             * Reiterate the key points of the financial plan in clear and concise language.
             * Emphasize the ongoing nature of financial planning and the need for flexibility.
             * Offer encouragement and support to the client in their financial journey.
-
-
+            * Include links to relevant financial terms or concepts that may be unfamiliar.
             ";
-
-
-
-            // Send the formatted prompt to the Gemini API
-            // $result = Gemini::geminiPro()->streamGenerateContent($prompt);
 
             $chat = Gemini::chat()
                 ->startChat(history: [
                     Content::parse(part: $prompt)
                 ]);
 
-            // // Collect the response
-            // $chatResult = '';
-            // foreach ($result as $response) {
-            //     $chatResult .= $response->text();
-            // }
-            // $result = null;
-
             $result = array_map(function ($prompt) use ($chat) {
                 return $chat->sendMessage($prompt)->text();
             }, $chatprompt);
 
-            // dd($result);
-
-            // Return the response to the Inertia view
-            // return Inertia::render('Homepage', ['result' => $chatResult]);
             return response()->json(['result' => $result]);
         } catch (ValidationException $e) {
             // Return a JSON response with validation errors
