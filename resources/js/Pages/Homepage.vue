@@ -239,7 +239,9 @@ const submitForm = async () => {
       </div>
       <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
-        <h3 class="text-center text-h4 !font-bold">CHAPTER : Goal Analysis</h3>
+        <h3 class="text-center text-h4 !font-bold">
+          CHAPTER 3 : Goal Analysis
+        </h3>
         <div class="my-5">
           <div v-html="htmlResult3" class="markdown-content"></div>
         </div>
