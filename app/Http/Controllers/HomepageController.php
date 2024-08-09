@@ -501,7 +501,7 @@ class HomepageController extends Controller
 
             Continuing our conversation, please generate Part 1 of the financial advice document with more than 2000 words:
 
-            **BAB 1. Executive Summary:**
+            **CHAPTER 1. Executive Summary:**
             * Provide a concise overview of the client's financial situation, goals, and key recommendations.
             * Tailor the language and financial advice to the  {$clientData['country']} context (using {$clientData['currency']}).
             * Highlight the client's strengths, weaknesses, opportunities, and threats.
@@ -519,7 +519,7 @@ class HomepageController extends Controller
 
             Continuing our conversation, please generate Part 2 of the financial advice document with more than 2000 words:
 
-            **BAB 2. Financial Snapshot:**
+            **CHAPTER 2. Financial Snapshot:**
 
             * **2.1 Income, Expense, Debt Statement:**  Create a detailed table showing income sources, expense categories, debt/liabilities monthly categories, and net cash flow. please make sure the calculations are corrects
             * **2.2 Net Worth Statement:** Create a table summarizing assets and liabilities to calculate net worth. please make sure the calculations are corrects
@@ -539,7 +539,7 @@ class HomepageController extends Controller
 
             Continuing our conversation, please generate Part 3 of the financial advice document, focusing only on the specific financial goals selected by the client with more than 2000 words:
 
-            BAB 3. Goal Analysis:
+            CHAPTER 3. Goal Analysis:
 
             * 3.1 Goals Overview and Prioritization:
                 * As you can see that the client answer of these question here (also please keep in mind) :
@@ -567,7 +567,7 @@ class HomepageController extends Controller
 
             Continuing our conversation, please generate Part 4 of the financial advice document with more than 2000 words:
 
-            **BAB 4. Recommended Action Plan:**
+            **CHAPTER 4. Recommended Action Plan:**
 
             4.1 Customized Strategies for Achieving Your Financial Goal:
             Based on the selected financial goal of {$clientData['financialGoal']}, we will develop three distinct strategies to help you reach your objective. Each strategy will include detailed steps, considerations, and simulations, along with an estimated time to achieve your goal:
@@ -621,7 +621,7 @@ class HomepageController extends Controller
 
             Continuing our conversation, please generate the final part of the financial advice document with more than 2000 words:
 
-            **BAB 5. Monitoring, Review, and Conclusion:**
+            **CHAPTER 5. Monitoring, Review, and Conclusion:**
 
             * **5.1 Monitoring and Review Schedule:** Outline a timeline for regular review and adjustments to the financial plan. with detailed explanations
             * **5.2 Contingency Planning:** Discuss potential risks and how to adapt the plan if circumstances change. with detailed explanations

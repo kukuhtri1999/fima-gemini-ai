@@ -224,14 +224,14 @@ const submitForm = async () => {
       </div>
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 1 : Executive Summary
+          CHAPTER 1 : Executive Summary
         </h3>
         <div v-html="htmlResult1" class="markdown-content"></div>
       </div>
       <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 2 : Financial Snapshot
+          CHAPTER 2 : Financial Snapshot
         </h3>
         <div class="my-5">
           <div v-html="htmlResult2" class="markdown-content"></div>
@@ -239,7 +239,7 @@ const submitForm = async () => {
       </div>
       <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
-        <h3 class="text-center text-h4 !font-bold">BAB 3 : Goal Analysis</h3>
+        <h3 class="text-center text-h4 !font-bold">CHAPTER : Goal Analysis</h3>
         <div class="my-5">
           <div v-html="htmlResult3" class="markdown-content"></div>
         </div>
@@ -247,7 +247,7 @@ const submitForm = async () => {
       <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 4 : Recommended Action Plan
+          CHAPTER 4 : Recommended Action Plan
         </h3>
         <div class="my-5">
           <div v-html="htmlResult4" class="markdown-content"></div>
@@ -256,7 +256,7 @@ const submitForm = async () => {
       <!--ADD_PAGE-->
       <div class="py-10 bab border-y-[1px] solid border-gray-300">
         <h3 class="text-center text-h4 !font-bold">
-          BAB 5 : Monitoring, Review and Conclusion
+          CHAPTER 5 : Monitoring, Review and Conclusion
         </h3>
         <div v-html="htmlResult5" class="markdown-content"></div>
       </div>
