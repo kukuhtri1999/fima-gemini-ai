@@ -36,7 +36,7 @@ const formData = reactive({
   debtMinPayments: null,
   debtPayoffTimeframe: null,
   emergencyFundMonths: null,
-  monthlyExpenses: null,
+  emergencyMonthlyExpenses: null,
   emergencyFundAccount: null,
   businessType: null,
   startupCosts: null,
@@ -403,7 +403,7 @@ const removeChild = (index) => {
         suffix="months"
       ></VTextField>
       <VCurrency
-        v-model="formData.monthlyExpenses"
+        v-model="formData.emergencyMonthlyExpenses"
         :currency="props.currencyNow.value"
         label="What are your estimated monthly expenses?"
         class="m-2"

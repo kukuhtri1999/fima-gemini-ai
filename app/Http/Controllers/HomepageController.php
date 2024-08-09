@@ -86,7 +86,7 @@ class HomepageController extends Controller
             ],
             'Emergency Fund' => [
                 'field2.emergencyFundMonths' => 'required|integer',
-                'field2.monthlyExpenses' => 'required|numeric',
+                'field2.emergencyMonthlyExpenses' => 'required|numeric',
                 'field2.emergencyFundAccount' => 'required|string',
             ],
             'Starting a Business' => [
@@ -173,8 +173,8 @@ class HomepageController extends Controller
             'field2.debtPayoffTimeframe.integer' => 'Debt Payoff Timeframe must be an integer',
             'field2.emergencyFundMonths.required' => 'Emergency Fund Months are required',
             'field2.emergencyFundMonths.integer' => 'Emergency Fund Months must be an integer',
-            'field2.monthlyExpenses.required' => 'Monthly Expenses are required',
-            'field2.monthlyExpenses.numeric' => 'Monthly Expenses must be a number',
+            'field2.emergencyMonthlyExpenses.required' => 'Monthly Expenses are required',
+            'field2.emergencyMonthlyExpenses.numeric' => 'Monthly Expenses must be a number',
             'field2.emergencyFundAccount.required' => 'Emergency Fund Account information is required',
             'field2.businessType.required' => 'Business Type is required',
             'field2.startupCosts.required' => 'Startup Costs are required',
@@ -286,7 +286,7 @@ class HomepageController extends Controller
             case 'Emergency Fund':
                 $clientData = array_merge($clientData, [
                     'emergencyFundMonths' => $validated['field2']['emergencyFundMonths'],
-                    'monthlyExpenses' => $validated['field2']['monthlyExpenses'],
+                    'emergencyMonthlyExpenses' => $validated['field2']['emergencyMonthlyExpenses'],
                     'emergencyFundAccount' => $validated['field2']['emergencyFundAccount'],
                 ]);
                 break;
@@ -384,7 +384,7 @@ class HomepageController extends Controller
             case 'Emergency Fund':
                 $financialGoalPrompt = "
             How many months of essential living expenses would you like your emergency fund to cover? {$clientData['emergencyFundMonths']} months
-            What are your estimated monthly expenses? {$clientData['currency']} {$clientData['monthlyExpenses']}
+            What are your estimated monthly expenses? {$clientData['currency']} {$clientData['emergencyMonthlyExpenses']}
             Where will you keep your emergency fund? {$clientData['emergencyFundAccount']}
             ";
                 break;
@@ -448,6 +448,8 @@ class HomepageController extends Controller
             $clientData = $this->collectClientData($validated);
 
             $financialGoalPrompt = $this->generateFinancialGoalPrompt($clientData);
+
+            // dd($clientData['monthlyExpenses']);
 
             $prompt = "
             You are an expert financial advisor fluent in multiple languages. Analyze the following client information and generate a detailed financial advice document in the {$clientData['country']} language:
@@ -547,8 +549,8 @@ class HomepageController extends Controller
             * 3.2 Goal Feasibility and Specific Strategies:
                 * Assess the feasibility of each selected goal based on the client's financial resources, time horizon, and risk tolerance.
                 * Provide tailored recommendations and action steps to help the client achieve each goal.
-            * 3.3 Four Strategy Plans:
-                * Develop four distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes. with detailed explanations
+            * 3.3 Three Strategy Plans:
+                * Develop three distinct strategies for achieving the selected goals, varying in levels of risk and potential outcomes. with detailed explanations
                 * Present each strategy with few and full simulation table illustrating potential financial scenarios based on different assumptions and investment choices. with detailed explanations
 
             Additional Instructions:
@@ -567,9 +569,43 @@ class HomepageController extends Controller
 
             **BAB 4. Recommended Action Plan:**
 
-            * **4.1 Cash Flow Management & Investment Planning:** Offer detailed and easy to understand language of budgeting strategies, debt management plans, and investment recommendations based on the client's goals and risk tolerance. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
-            * **4.2 Tax and Insurance Planning:** Suggest tax optimization strategies relevant to {$clientData['country']} and recommend appropriate insurance coverage based on the client's needs and risk profile. please also create 3 best recommendations plan options with data table simulations with detailed strategy and with detailed explanations until the financial goal reached
-            * **4.3 Other Recommended Action Plan:** Provide detailed with some example simulations until the financial goals reached of additional financial planning recommendations tailored to the client's specific situation and goals based on this client financial goals :
+            4.1 Customized Strategies for Achieving Your Financial Goal:
+            Based on the selected financial goal of {$clientData['financialGoal']}, we will develop three distinct strategies to help you reach your objective. Each strategy will include detailed steps, considerations, and simulations, along with an estimated time to achieve your goal:
+
+            First Strategy - Conservative Approach:
+            Overview: A low-risk strategy that focuses on stable, consistent growth with minimal risk exposure.
+            Action Steps: Provide specific budgeting adjustments, investment allocations, and debt management techniques tailored to your financial goal. Include any relevant tax considerations and insurance recommendations.
+            Simulations: Present a table showing potential outcomes based on conservative estimates. Include estimated time to reach the goal based on this strategy.
+            Considerations: Discuss potential trade-offs, such as slower growth but lower risk.
+            Estimated Time to Reach Goal: Provide an estimated time frame based on the conservative strategy.
+
+            Second Strategy - Balanced Approach:
+            Overview: A moderate-risk strategy that balances growth potential with risk management.
+            Action Steps: Outline a plan that combines stable investments with a portion allocated to higher-growth opportunities. Include budgeting, tax, and insurance advice specific to your goal.
+            Simulations: Present a table showing potential outcomes based on balanced estimates. Include estimated time to reach the goal based on this strategy.
+            Considerations: Discuss the balance between risk and reward, emphasizing the importance of regular monitoring and adjustments.
+            Estimated Time to Reach Goal: Provide an estimated time frame based on the balanced strategy.
+
+            Third Strategy - Aggressive Approach:
+            Overview: A high-risk strategy aiming for rapid growth with greater risk exposure.
+            Action Steps: Detail a plan that emphasizes high-growth investments, aggressive debt repayment, or accelerated savings strategies. Include tax optimization and insurance considerations where applicable.
+            Simulations: Present a table showing potential outcomes based on aggressive estimates. Include estimated time to reach the goal based on this strategy.
+            Considerations: Discuss the higher risk involved and the need for careful monitoring and potential adjustments.
+            Estimated Time to Reach Goal: Provide an estimated time frame based on the aggressive strategy.
+
+            4.2 Key Considerations and Recommendations:
+            Discuss the most critical factors the client should consider for each strategy, such as changes in income, unexpected expenses, market conditions, or life events.
+            Provide recommendations on how to adapt each strategy in response to these factors, ensuring that the client remains on track to achieve their financial goal.
+
+            4.3 Detailed Implementation Plan:
+            For each strategy, offer a step-by-step implementation plan, including budgeting tips, debt management techniques, and investment recommendations specific to the client's goal and risk tolerance.
+            Ensure the plan is realistic and tailored to the client's financial situation, taking into account their country-specific context and the local currency.
+
+            Additional Instructions:
+            - Use clear and easy-to-understand language, with detailed explanations of financial terms and concepts.
+            - Ensure accuracy in data and calculations. Use tables to present financial scenarios and outcomes.
+            - Assume the client has little to no knowledge of financial planning, so explain everything thoroughly.
+            - Make sure that each strategy is actionable and that the client can follow through with the recommendations provided.
 
             $financialGoalPrompt
 
