@@ -5,8 +5,6 @@ import { marked } from 'marked';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import jsPDF from 'jspdf';
-import html2canvas from 'html2canvas';
-import html2pdf from 'html2pdf.js';
 import MainSection from '@/Components/MainSection.vue';
 import PersonalInformation from '@/Components/Part/PersonalInformation.vue';
 import FinancialGoals from '@/Components/Part/FinancialGoals.vue';
