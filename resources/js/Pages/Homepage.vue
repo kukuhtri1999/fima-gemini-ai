@@ -283,7 +283,7 @@ const submitForm = async () => {
     </div>
   </div>
 </template>
-<style>
+<!-- <style scoped>
 .markdown-content {
   /* Style for tables */
   width: 100%;
@@ -349,4 +349,4 @@ const submitForm = async () => {
   font-size: 20px !important; /* Slightly larger font for headings */
   font-weight: bold;
 }
-</style>
+</style> -->

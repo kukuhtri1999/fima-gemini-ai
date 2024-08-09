@@ -27,3 +27,69 @@ select:focus {
   outline-offset: 0 !important;
   box-shadow: none !important;
 }
+
+.markdown-content {
+  /* Style for tables */
+  width: 100%;
+  overflow-x: auto;
+}
+
+.markdown-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 20px 0;
+}
+
+.markdown-content th,
+.markdown-content td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.markdown-content th {
+  background-color: #f2f2f2;
+}
+
+.markdown-content tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.markdown-content tr:hover {
+  background-color: #f1f1f1;
+}
+
+.markdown-content p {
+  margin: 15px 0;
+}
+.markdown-content ul {
+  margin: 15px 0;
+  list-style-type: disc;
+  list-style-position: inside;
+  padding-left: 15px;
+}
+
+.markdown-content ol {
+  margin: 15px 0;
+  list-style-type: auto;
+  list-style-position: inside;
+  padding-left: 5px;
+  font-weight: 300;
+}
+.markdown-content li {
+  margin: 15px 0;
+}
+
+/* Reduce the font size globally for the PDF */
+#answers {
+  font-size: 14px;
+  line-height: 1.4;
+  word-spacing: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Specific adjustments for headings and other elements */
+#answers h3 {
+  font-size: 20px !important; /* Slightly larger font for headings */
+  font-weight: bold;
+}
