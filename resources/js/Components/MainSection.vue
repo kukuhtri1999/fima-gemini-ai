@@ -3,13 +3,10 @@
 <template>
   <div
     class="w-full bg-white h-screen p-10 bg-blend-multiply bg-center"
-    style="
-      background-image: url('/storage/images/grad.png'),
-        url('/storage/images/a-blur.png');
-    "
+    style="background-image: url('/images/grad.png'), url('/images/a-blur.png')"
   >
     <div
-      style="background-image: url('/storage/images/dot.png')"
+      style="background-image: url('/images/dot.png')"
       class="w-full h-full bg-repeat content-center"
     >
       <div class="flex justify-center py-5 animate1">
